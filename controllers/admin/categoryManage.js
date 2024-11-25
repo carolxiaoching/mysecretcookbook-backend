@@ -1,0 +1,125 @@
+const successHandler = require("../../services/successHandler");
+const appError = require("../../services/appError");
+const validationUtils = require("../../utils/validationUtils");
+const Category = require("../../models/category");
+
+const CategoryControllers = {
+  // 取得全部分類
+  async getAllCategories(req, res, next) {
+    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
+    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
+    const categories = await Category.find({}).sort(sort);
+
+    successHandler(res, 200, categories);
+  },
+
+  // 取得指定分類
+  async getCategory(req, res, next) {
+    const { categoryId } = req.params;
+
+    if (!validationUtils.isValidObjectId(categoryId)) {
+      return appError(400, "分類 ID 錯誤！", next);
+    }
+
+    if (!(await validationUtils.isIdExist(Category, categoryId))) {
+      return appError(400, "查無此分類！", next);
+    }
+
+    const category = await Category.findById(categoryId);
+
+    successHandler(res, 200, category);
+  },
+
+  // 新增分類
+  async createCategory(req, res, next) {
+    const { title } = req.body;
+
+    if (!validationUtils.isObjectEmpty(req.body)) {
+      return appError(400, "欄位不得為空！", next);
+    }
+
+    if (!validationUtils.isValidString(title, 1, 10)) {
+      return appError(400, "分類標題需介於 1 到 10 個字元之間！", next);
+    }
+
+    // 新增資料
+    const category = await Category.create({
+      title,
+    });
+
+    successHandler(res, 201, category);
+  },
+
+  // 更新分類
+  async updateCategory(req, res, next) {
+    const { categoryId } = req.params;
+    const { title } = req.body;
+
+    const validations = [
+      {
+        condition: !validationUtils.isValidObjectId(categoryId),
+        message: "分類 ID 錯誤！",
+      },
+      {
+        condition: !(await validationUtils.isIdExist(Category, categoryId)),
+        message: "查無此分類！",
+      },
+      {
+        condition: !validationUtils.isObjectEmpty(req.body),
+        message: "欄位不得為空！",
+      },
+      {
+        condition: !validationUtils.isValidString(title, 1, 10),
+        message: "分類標題需介於 1 到 10 個字元之間！",
+      },
+    ];
+
+    validationUtils.checkValidation(validations, next);
+
+    const newCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      {
+        title,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    successHandler(res, 200, newCategory);
+  },
+
+  // 刪除指定分類
+  async delCategory(req, res, next) {
+    const { categoryId } = req.params;
+
+    if (!validationUtils.isValidObjectId(categoryId)) {
+      return appError(400, "分類 ID 錯誤！", next);
+    }
+
+    if (!(await validationUtils.isIdExist(Category, categoryId))) {
+      return appError(400, "查無此分類！", next);
+    }
+
+    const delCategory = await Category.findByIdAndDelete(categoryId, {
+      new: true,
+    });
+
+    // 若刪除失敗
+    if (!delCategory) {
+      return appError(400, "刪除失敗，查無此分類", next);
+    }
+
+    successHandler(res, 200, delCategory);
+  },
+
+  // 刪除全部分類
+  async delAllCategories(req, res, next) {
+    await Category.deleteMany({});
+
+    successHandler(res, 200, []);
+  },
+};
+
+module.exports = CategoryControllers;
