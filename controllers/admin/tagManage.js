@@ -77,7 +77,7 @@ const TagControllers = {
     validationUtils.checkValidation(validations, next);
 
     const newTag = await Tag.findByIdAndUpdate(
-      this.updateTagId,
+      tagId,
       {
         title,
       },
