@@ -193,7 +193,7 @@ const RecipeControllers = {
         message: "描述欄位錯誤，且描述需介於 1 到 300 個字元之間！",
       },
       {
-        condition: note !== undefined && !validationUtils.isValidString(note),
+        condition: note !== undefined && typeof note !== "string",
         message: "小撇步欄位錯誤！",
       },
       {
