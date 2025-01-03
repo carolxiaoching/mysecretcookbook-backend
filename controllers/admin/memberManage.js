@@ -122,8 +122,8 @@ const MemberControllers = {
       },
       {
         condition:
-          discription !== undefined &&
-          !validationUtils.isValidString(discription, 0, 100),
+          description !== undefined &&
+          !validationUtils.isValidString(description, 0, 100),
         message: "自我介紹需小於 150 個字元！",
       },
     ];
@@ -136,7 +136,7 @@ const MemberControllers = {
         nickName,
         gender,
         avatarImgUrl,
-        discription,
+        description,
         role,
       },
       {

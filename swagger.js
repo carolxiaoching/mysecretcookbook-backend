@@ -79,7 +79,7 @@ const doc = {
           default: "",
           example: "https://123.png",
         },
-        discription: {
+        description: {
           type: "string",
           description: "自我介紹",
           default: "",

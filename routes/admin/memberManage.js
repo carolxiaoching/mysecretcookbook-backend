@@ -36,7 +36,7 @@ router.post(
             "nickName": "",
             "email": "admin@gmail.com",
             "avatarImgUrl": "",
-            "discription": "",
+            "description": "",
             "gender": "secret"
           }
         }
@@ -67,7 +67,7 @@ router.get(
             "nickName": "",
             "email": "admin@gmail.com",
             "avatarImgUrl": "",
-            "discription": "",
+            "description": "",
             "gender": "secret"
           }
         }
@@ -108,7 +108,7 @@ router.get(
             "nickName": "Carol",
             "gender": "secret",
             "avatarImgUrl": "https://123.png",
-            "discription": "",
+            "description": "",
             "email": "carol@mail.com",
             "role": "member",
             "createdAt": "2024-08-02T17:07:31.743Z",
@@ -149,7 +149,7 @@ router.get(
           "nickName": "Carol",
           "gender": "secret",
           "avatarImgUrl": "https://123.png",
-          "discription": "",
+          "description": "",
           "email": "carol@mail.com",
           "role": "member",
           "createdAt": "2024-08-02T17:07:31.743Z",
@@ -199,7 +199,7 @@ router.patch(
             "nickName": "Carol",
             "gender": "secret",
             "avatarImgUrl": "https://123.png",
-            "discription": "",
+            "description": "",
             "email": "carol@mail.com",
             "role": "member",
             "createdAt": "2024-08-02T17:07:31.743Z",
@@ -240,7 +240,7 @@ router.delete(
           "nickName": "Carol",
           "gender": "secret",
           "avatarImgUrl": "https://123.png",
-          "discription": "",
+          "description": "",
           "createdAt": "2024-08-02T17:07:31.743Z",
           "updatedAt": "2024-08-07T17:02:49.701Z"
         }

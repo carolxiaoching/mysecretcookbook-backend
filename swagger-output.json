@@ -101,7 +101,7 @@
                           "type": "string",
                           "example": ""
                         },
-                        "discription": {
+                        "description": {
                           "type": "string",
                           "example": ""
                         },
@@ -190,7 +190,7 @@
                           "type": "string",
                           "example": ""
                         },
-                        "discription": {
+                        "description": {
                           "type": "string",
                           "example": ""
                         },
@@ -256,7 +256,7 @@
                       "type": "string",
                       "example": "secret"
                     },
-                    "discription": {
+                    "description": {
                       "type": "string",
                       "example": ""
                     },
@@ -315,7 +315,7 @@
                       "type": "string",
                       "example": "https://123.png"
                     },
-                    "discription": {
+                    "description": {
                       "type": "string",
                       "example": ""
                     },
@@ -398,7 +398,7 @@
                       "type": "string",
                       "example": "https://123.png"
                     },
-                    "discription": {
+                    "description": {
                       "type": "string",
                       "example": ""
                     },
@@ -491,7 +491,7 @@
                       "type": "string",
                       "example": "https://123.png"
                     },
-                    "discription": {
+                    "description": {
                       "type": "string",
                       "example": ""
                     },
@@ -2900,7 +2900,7 @@
                           "type": "string",
                           "example": ""
                         },
-                        "discription": {
+                        "description": {
                           "type": "string",
                           "example": ""
                         },
@@ -2964,7 +2964,7 @@
                           "type": "string",
                           "example": ""
                         },
-                        "discription": {
+                        "description": {
                           "type": "string",
                           "example": ""
                         },
@@ -3036,7 +3036,7 @@
                         "type": "string",
                         "example": "https://123.png"
                       },
-                      "discription": {
+                      "description": {
                         "type": "string",
                         "example": ""
                       },
@@ -3152,7 +3152,7 @@
                       "type": "string",
                       "example": "https://123.png"
                     },
-                    "discription": {
+                    "description": {
                       "type": "string",
                       "example": ""
                     },
@@ -3248,7 +3248,7 @@
                         "type": "string",
                         "example": "https://123.png"
                       },
-                      "discription": {
+                      "description": {
                         "type": "string",
                         "example": ""
                       },
@@ -3328,7 +3328,7 @@
                       "type": "string",
                       "example": "https://123.png"
                     },
-                    "discription": {
+                    "description": {
                       "type": "string",
                       "example": ""
                     },
@@ -5895,7 +5895,7 @@
           "default": "",
           "example": "https://123.png"
         },
-        "discription": {
+        "description": {
           "type": "string",
           "description": "自我介紹",
           "default": "",
