@@ -101,6 +101,10 @@
                           "type": "string",
                           "example": ""
                         },
+                        "discription": {
+                          "type": "string",
+                          "example": ""
+                        },
                         "gender": {
                           "type": "string",
                           "example": "secret"
@@ -186,6 +190,10 @@
                           "type": "string",
                           "example": ""
                         },
+                        "discription": {
+                          "type": "string",
+                          "example": ""
+                        },
                         "gender": {
                           "type": "string",
                           "example": "secret"
@@ -248,6 +256,10 @@
                       "type": "string",
                       "example": "secret"
                     },
+                    "discription": {
+                      "type": "string",
+                      "example": ""
+                    },
                     "createdAt": {
                       "type": "string",
                       "example": "2024-08-02T17:08:01.747Z"
@@ -302,6 +314,10 @@
                     "avatarImgUrl": {
                       "type": "string",
                       "example": "https://123.png"
+                    },
+                    "discription": {
+                      "type": "string",
+                      "example": ""
                     },
                     "email": {
                       "type": "string",
@@ -381,6 +397,10 @@
                     "avatarImgUrl": {
                       "type": "string",
                       "example": "https://123.png"
+                    },
+                    "discription": {
+                      "type": "string",
+                      "example": ""
                     },
                     "email": {
                       "type": "string",
@@ -471,6 +491,10 @@
                       "type": "string",
                       "example": "https://123.png"
                     },
+                    "discription": {
+                      "type": "string",
+                      "example": ""
+                    },
                     "email": {
                       "type": "string",
                       "example": "carol@mail.com"
@@ -507,176 +531,8 @@
         "summary": "取得我的收藏列表",
         "description": "取得我的收藏列表",
         "responses": {
-          "200": {
-            "description": "回傳成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "午後紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "object",
-                        "properties": {
-                          "_id": {
-                            "type": "string",
-                            "example": "66ad17220c1f2d5e934ba5d5"
-                          },
-                          "title": {
-                            "type": "string",
-                            "example": "飲品"
-                          }
-                        }
-                      },
-                      "user": {
-                        "type": "object",
-                        "properties": {
-                          "_id": {
-                            "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
-                          },
-                          "nickName": {
-                            "type": "string",
-                            "example": "carol"
-                          },
-                          "avatarImgUrl": {
-                            "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
-                            }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
-                            }
-                          }
-                        }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
-                      }
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
+          "default": {
+            "description": ""
           }
         },
         "security": [
@@ -3044,6 +2900,10 @@
                           "type": "string",
                           "example": ""
                         },
+                        "discription": {
+                          "type": "string",
+                          "example": ""
+                        },
                         "gender": {
                           "type": "string",
                           "example": "secret"
@@ -3101,6 +2961,10 @@
                           "example": "admin@gmail.com"
                         },
                         "avatarImgUrl": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "discription": {
                           "type": "string",
                           "example": ""
                         },
@@ -3171,6 +3035,10 @@
                       "avatarImgUrl": {
                         "type": "string",
                         "example": "https://123.png"
+                      },
+                      "discription": {
+                        "type": "string",
+                        "example": ""
                       },
                       "email": {
                         "type": "string",
@@ -3284,6 +3152,10 @@
                       "type": "string",
                       "example": "https://123.png"
                     },
+                    "discription": {
+                      "type": "string",
+                      "example": ""
+                    },
                     "email": {
                       "type": "string",
                       "example": "carol@mail.com"
@@ -3376,6 +3248,10 @@
                         "type": "string",
                         "example": "https://123.png"
                       },
+                      "discription": {
+                        "type": "string",
+                        "example": ""
+                      },
                       "email": {
                         "type": "string",
                         "example": "carol@mail.com"
@@ -3451,6 +3327,10 @@
                     "avatarImgUrl": {
                       "type": "string",
                       "example": "https://123.png"
+                    },
+                    "discription": {
+                      "type": "string",
+                      "example": ""
                     },
                     "createdAt": {
                       "type": "string",
@@ -6014,6 +5894,12 @@
           "description": "頭像圖片網址",
           "default": "",
           "example": "https://123.png"
+        },
+        "discription": {
+          "type": "string",
+          "description": "自我介紹",
+          "default": "",
+          "example": "ˊ這是我的自我介紹"
         },
         "email": {
           "type": "string",

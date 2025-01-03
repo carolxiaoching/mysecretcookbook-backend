@@ -37,6 +37,7 @@ router.post(
             "nickName": "Carol",
             "email": "carol@gmail.com",
             "avatarImgUrl": "",
+            "discription": "",
             "gender": "secret"
           }
         }
@@ -74,6 +75,7 @@ router.post(
             "nickName": "Carol",
             "email": "carol@gmail.com",
             "avatarImgUrl": "",
+            "discription": "",
             "gender": "secret"
           }
         }
@@ -105,6 +107,7 @@ router.get(
           "nickName": "Carol",
           "avatarImgUrl": "",
           "gender": "secret",
+          "discription": "",
           "createdAt": "2024-08-02T17:08:01.747Z",
           "updatedAt": "2024-08-02T17:08:01.747Z"
         }
@@ -133,6 +136,7 @@ router.get(
           "nickName": "Carol",
           "gender": "secret",
           "avatarImgUrl": "https://123.png",
+          "discription": "",
           "email": "carol@mail.com",
           "createdAt": "2024-08-02T17:07:31.743Z",
           "updatedAt": "2024-08-07T17:02:49.701Z"
@@ -173,6 +177,7 @@ router.patch(
           "nickName": "Carol",
           "gender": "secret",
           "avatarImgUrl": "https://123.png",
+          "discription": "",
           "email": "carol@mail.com",
           "createdAt": "2024-08-02T17:07:31.743Z",
           "updatedAt": "2024-08-07T17:02:49.701Z"
@@ -214,6 +219,7 @@ router.post(
           "nickName": "Carol",
           "gender": "secret",
           "avatarImgUrl": "https://123.png",
+          "discription": "",
           "email": "carol@mail.com",
           "createdAt": "2024-08-02T17:07:31.743Z",
           "updatedAt": "2024-08-07T17:02:49.701Z"
@@ -262,6 +268,7 @@ router.get(
               "_id": "66ad12712a4c0826b5b65f3e",
               "nickName": "carol",
               "avatarImgUrl": ""
+              "discription": "",
             },
             "cookingTime": "0-15 分鐘",
             "description": "描述2",

@@ -55,6 +55,7 @@ const UserControllers = {
       email,
       password: newPassword,
       avatarImgUrl: "",
+      discription: "",
       gender: "secret",
       role: "member",
     });
@@ -129,7 +130,7 @@ const UserControllers = {
   // 更新我的資料
   async updateMyProfile(req, res, next) {
     const { auth } = req;
-    const { nickName, gender, avatarImgUrl } = req.body;
+    const { nickName, gender, avatarImgUrl, discription } = req.body;
 
     const validations = [
       {
@@ -154,6 +155,12 @@ const UserControllers = {
           !validationUtils.isValidUrl(avatarImgUrl),
         message: "頭像格式錯誤！",
       },
+      {
+        condition:
+          discription !== undefined &&
+          !validationUtils.isValidString(discription, 0, 100),
+        message: "自我介紹需小於 150 個字元！",
+      },
     ];
 
     validationUtils.checkValidation(validations, next);
@@ -164,6 +171,7 @@ const UserControllers = {
         nickName,
         gender,
         avatarImgUrl,
+        discription,
       },
       {
         new: true,

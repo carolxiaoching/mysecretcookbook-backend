@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    description: {
+      type: String,
+      default: "",
+    },
     email: {
       type: String,
       required: [true, "請輸入您的電子信箱"],

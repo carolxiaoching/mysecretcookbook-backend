@@ -120,6 +120,12 @@ const MemberControllers = {
           !validationUtils.isValidUrl(avatarImgUrl),
         message: "頭像格式錯誤！",
       },
+      {
+        condition:
+          discription !== undefined &&
+          !validationUtils.isValidString(discription, 0, 100),
+        message: "自我介紹需小於 150 個字元！",
+      },
     ];
 
     validationUtils.checkValidation(validations, next);
@@ -130,6 +136,7 @@ const MemberControllers = {
         nickName,
         gender,
         avatarImgUrl,
+        discription,
         role,
       },
       {

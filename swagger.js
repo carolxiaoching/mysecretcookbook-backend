@@ -79,6 +79,12 @@ const doc = {
           default: "",
           example: "https://123.png",
         },
+        discription: {
+          type: "string",
+          description: "自我介紹",
+          default: "",
+          example: "ˊ這是我的自我介紹",
+        },
         email: {
           type: "string",
           format: "email",
