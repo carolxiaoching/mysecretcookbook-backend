@@ -278,7 +278,7 @@ const RecipeControllers = {
         message: "描述欄位錯誤！",
       },
       {
-        condition: note !== undefined && !validationUtils.isValidString(note),
+        condition: note !== undefined && typeof note !== "string",
         message: "小撇步欄位錯誤！",
       },
       {
