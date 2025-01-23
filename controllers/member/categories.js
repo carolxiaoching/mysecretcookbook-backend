@@ -7,7 +7,7 @@ const CategoryControllers = {
   // 取得全部分類資訊
   async getAllCategories(req, res, next) {
     // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
     const categories = await Category.find({}, { title: 1, _id: 1 }).sort(sort);
 
     successHandler(res, 200, categories);

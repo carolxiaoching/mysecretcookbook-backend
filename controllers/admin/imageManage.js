@@ -4,6 +4,7 @@ const successHandler = require("../../services/successHandler");
 const appError = require("../../services/appError");
 const firebaseAdmin = require("../../connections/firebase");
 const validationUtils = require("../../utils/validationUtils");
+const paginationUtils = require("../../utils/paginationUtils");
 const Image = require("../../models/image");
 const User = require("../../models/user");
 
@@ -13,10 +14,32 @@ const ImageControllers = {
   // 取得所有圖片
   async getAllImages(req, res, next) {
     // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
 
-    const images = await Image.find({}).sort(sort);
-    successHandler(res, 200, images);
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
+
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    // 判斷是否不分頁
+    const noPagination = req.query.noPagination === "true" ? true : false;
+
+    if (noPagination) {
+      // 不分頁，返回所有資料
+      const results = await Image.find({}).sort(sort);
+
+      successHandler(res, 200, results);
+    } else {
+      const { results, pagination } = await paginationUtils({
+        model: Image,
+        sort,
+        page,
+        perPage,
+      });
+
+      successHandler(res, 200, { results, pagination });
+    }
   },
 
   // 取得指定圖片

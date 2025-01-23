@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const successHandler = require("../../services/successHandler");
 const appError = require("../../services/appError");
 const validationUtils = require("../../utils/validationUtils");
+const paginationUtils = require("../../utils/paginationUtils");
 const { generateAndSendJWT } = require("../../middleware/authMiddleware");
 const User = require("../../models/user");
 
@@ -61,11 +62,32 @@ const MemberControllers = {
   // 取得所有會員資料
   async getAllMembers(req, res, next) {
     // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
 
-    const members = await User.find({}).select("+email +role").sort(sort);
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
 
-    successHandler(res, 200, members);
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    // 判斷是否不分頁
+    const noPagination = req.query.noPagination === "true" ? true : false;
+
+    if (noPagination) {
+      // 不分頁，返回所有資料
+      const results = await User.find({}).select("+email +role").sort(sort);
+
+      successHandler(res, 200, results);
+    } else {
+      const { results, pagination } = await paginationUtils({
+        model: User,
+        sort,
+        page,
+        perPage,
+      });
+
+      successHandler(res, 200, { results, pagination });
+    }
   },
 
   // 取得指定會員資料

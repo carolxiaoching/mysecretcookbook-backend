@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const appError = require("../../services/appError");
 const successHandler = require("../../services/successHandler");
 const validationUtils = require("../../utils/validationUtils");
+const paginationUtils = require("../../utils/paginationUtils");
 const { generateAndSendJWT } = require("../../middleware/authMiddleware");
 const User = require("../../models/user");
 const Recipe = require("../../models/recipe");
@@ -233,28 +234,62 @@ const UserControllers = {
     const { auth } = req;
 
     // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
 
-    const collectList = await Recipe.find(
-      {
-        collects: { $in: [auth._id] },
-        isPublic: true,
-      },
-      {
-        _id: 1,
-        title: 1,
-        coverImgUrl: 1,
-        category: 1,
-        user: 1,
-        cookingTime: 1,
-        servings: 1,
-        collects: 1,
-        createdAt: 1,
-        updatedAt: 1,
-      }
-    ).sort(sort);
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
 
-    successHandler(res, 200, collectList);
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    // 預設搜尋條件
+    const query = {
+      collects: { $in: [auth._id] },
+      isPublic: true,
+    };
+
+    // 分類搜尋
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+
+    // 關鍵字搜尋
+    if (req.query.keyword) {
+      query.title = new RegExp(req.query.keyword);
+    }
+
+    // 標籤搜尋
+    if (req.query.tags) {
+      // 將 tags 字串分割為陣列
+      const tagsArray = req.query.tags.split(",");
+      query.tags = { $in: tagsArray };
+    }
+
+    const displayFields = {
+      _id: 1,
+      title: 1,
+      coverImgUrl: 1,
+      category: 1,
+      tags: 1,
+      user: 1,
+      isPublic: 1,
+      cookingTime: 1,
+      servings: 1,
+      collects: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    };
+
+    const { results, pagination } = await paginationUtils({
+      model: Recipe,
+      query,
+      sort,
+      displayFields,
+      page,
+      perPage,
+    });
+
+    successHandler(res, 200, { results, pagination });
   },
 };
 

@@ -1,6 +1,7 @@
 const appError = require("../../services/appError");
 const successHandler = require("../../services/successHandler");
 const validationUtils = require("../../utils/validationUtils");
+const paginationUtils = require("../../utils/paginationUtils");
 const Recipe = require("../../models/recipe");
 const Category = require("../../models/category");
 const User = require("../../models/user");
@@ -9,31 +10,63 @@ const RecipeControllers = {
   // 取得所有公開食譜
   async getAllPublicRecipes(req, res, next) {
     // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
 
-    const recipes = await Recipe.find(
-      { isPublic: true },
-      {
-        _id: 1,
-        title: 1,
-        coverImgUrl: 1,
-        category: 1,
-        user: 1,
-        cookingTime: 1,
-        servings: 1,
-        collects: 1,
-        createdAt: 1,
-        updatedAt: 1,
-      }
-    ).sort(sort);
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
 
-    successHandler(res, 200, recipes);
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    // 預設搜尋條件
+    const query = { isPublic: true };
+
+    // 分類搜尋
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+
+    // 關鍵字搜尋
+    if (req.query.keyword) {
+      query.title = new RegExp(req.query.keyword);
+    }
+
+    // 標籤搜尋
+    if (req.query.tags) {
+      // 將 tags 字串分割為陣列
+      const tagsArray = req.query.tags.split(",");
+      query.tags = { $in: tagsArray };
+    }
+
+    const displayFields = {
+      _id: 1,
+      title: 1,
+      coverImgUrl: 1,
+      category: 1,
+      tags: 1,
+      user: 1,
+      isPublic: 1,
+      cookingTime: 1,
+      servings: 1,
+      collects: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    };
+
+    const { results, pagination } = await paginationUtils({
+      model: Recipe,
+      query,
+      sort,
+      displayFields,
+      page,
+      perPage,
+    });
+
+    successHandler(res, 200, { results, pagination });
   },
 
   // 取得指定會員所有公開食譜
   async getUserAllPublicRecipes(req, res, next) {
-    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
     const { userId } = req.params;
 
     if (!validationUtils.isValidObjectId(userId)) {
@@ -44,26 +77,60 @@ const RecipeControllers = {
       return appError(400, "查無此會員！", next);
     }
 
-    const recipes = await Recipe.find(
-      {
-        user: userId,
-        isPublic: true,
-      },
-      {
-        _id: 1,
-        title: 1,
-        coverImgUrl: 1,
-        category: 1,
-        user: 1,
-        cookingTime: 1,
-        servings: 1,
-        collects: 1,
-        createdAt: 1,
-        updatedAt: 1,
-      }
-    ).sort(sort);
+    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
 
-    successHandler(res, 200, recipes);
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
+
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    // 預設搜尋條件
+    const query = { user: userId, isPublic: true };
+
+    // 分類搜尋
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+
+    // 關鍵字搜尋
+    if (req.query.keyword) {
+      query.title = new RegExp(req.query.keyword);
+    }
+
+    // 標籤搜尋
+    if (req.query.tags) {
+      // 將 tags 字串分割為陣列
+      const tagsArray = req.query.tags.split(",");
+      query.tags = { $in: tagsArray };
+    }
+
+    const displayFields = {
+      _id: 1,
+      title: 1,
+      coverImgUrl: 1,
+      category: 1,
+      tags: 1,
+      user: 1,
+      isPublic: 1,
+      cookingTime: 1,
+      servings: 1,
+      collects: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    };
+
+    const { results, pagination } = await paginationUtils({
+      model: Recipe,
+      query,
+      sort,
+      displayFields,
+      page,
+      perPage,
+    });
+
+    successHandler(res, 200, { results, pagination });
   },
 
   // 取得指定公開食譜
@@ -89,25 +156,61 @@ const RecipeControllers = {
   // 取得我的所有食譜
   async getAllMyRecipes(req, res, next) {
     const { auth } = req;
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
 
-    const recipes = await Recipe.find(
-      { user: auth._id },
-      {
-        _id: 1,
-        title: 1,
-        coverImgUrl: 1,
-        category: 1,
-        tags: 1,
-        user: 1,
-        cookingTime: 1,
-        servings: 1,
-        collects: 1,
-        createdAt: 1,
-        updatedAt: 1,
-      }
-    ).sort(sort);
-    successHandler(res, 200, recipes);
+    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
+
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
+
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    // 預設搜尋條件
+    const query = { user: auth._id, isPublic: true };
+
+    // 分類搜尋
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+
+    // 關鍵字搜尋
+    if (req.query.keyword) {
+      query.title = new RegExp(req.query.keyword);
+    }
+
+    // 標籤搜尋
+    if (req.query.tags) {
+      // 將 tags 字串分割為陣列
+      const tagsArray = req.query.tags.split(",");
+      query.tags = { $in: tagsArray };
+    }
+
+    const displayFields = {
+      _id: 1,
+      title: 1,
+      coverImgUrl: 1,
+      category: 1,
+      tags: 1,
+      user: 1,
+      isPublic: 1,
+      cookingTime: 1,
+      servings: 1,
+      collects: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    };
+
+    const { results, pagination } = await paginationUtils({
+      model: Recipe,
+      query,
+      sort,
+      displayFields,
+      page,
+      perPage,
+    });
+
+    successHandler(res, 200, { results, pagination });
   },
 
   // 取得我的食譜

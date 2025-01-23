@@ -1,6 +1,7 @@
 const successHandler = require("../../services/successHandler");
 const appError = require("../../services/appError");
 const validationUtils = require("../../utils/validationUtils");
+const paginationUtils = require("../../utils/paginationUtils");
 const Recipe = require("../../models/recipe");
 const Category = require("../../models/category");
 const User = require("../../models/user");
@@ -112,25 +113,48 @@ const RecipeControllers = {
   // 取得所有食譜
   async getAllRecipes(req, res, next) {
     // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
-    const recipes = await Recipe.find(
-      {},
-      {
-        _id: 1,
-        title: 1,
-        coverImgUrl: 1,
-        category: 1,
-        tags: 1,
-        user: 1,
-        cookingTime: 1,
-        servings: 1,
-        collects: 1,
-        createdAt: 1,
-        updatedAt: 1,
-      }
-    ).sort(sort);
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
 
-    successHandler(res, 200, recipes);
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
+
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    const displayFields = {
+      _id: 1,
+      title: 1,
+      coverImgUrl: 1,
+      category: 1,
+      tags: 1,
+      user: 1,
+      isPublic: 1,
+      cookingTime: 1,
+      servings: 1,
+      collects: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    };
+
+    // 判斷是否不分頁
+    const noPagination = req.query.noPagination === "true" ? true : false;
+
+    if (noPagination) {
+      // 不分頁，返回所有資料
+      const results = await Recipe.find({}, displayFields).sort(sort);
+
+      successHandler(res, 200, results);
+    } else {
+      const { results, pagination } = await paginationUtils({
+        model: Recipe,
+        sort,
+        displayFields,
+        page,
+        perPage,
+      });
+
+      successHandler(res, 200, { results, pagination });
+    }
   },
 
   // 取得指定食譜
@@ -280,8 +304,6 @@ const RecipeControllers = {
   // 取得指定會員所有食譜
   async getMemberAllRecipes(req, res, next) {
     const { memberId } = req.params;
-    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
 
     if (!validationUtils.isValidObjectId(memberId)) {
       return appError(400, "會員 ID 錯誤！", next);
@@ -291,25 +313,43 @@ const RecipeControllers = {
       return appError(400, "查無此會員！", next);
     }
 
-    const recipe = await Recipe.find(
-      { user: memberId },
-      {
-        _id: 1,
-        title: 1,
-        coverImgUrl: 1,
-        category: 1,
-        tags: 1,
-        user: 1,
-        cookingTime: 1,
-        servings: 1,
-        collects: 1,
-        createdAt: 1,
-        updatedAt: 1,
-        collects: 1,
-      }
-    ).sort(sort);
+    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
 
-    successHandler(res, 200, recipe);
+    // 第幾頁，預設為 1
+    const page = req.query.page ? Number(req.query.page) : 1;
+
+    // 每頁幾筆，預設為 10
+    const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
+
+    // 預設搜尋條件
+    const query = { user: memberId };
+
+    const displayFields = {
+      _id: 1,
+      title: 1,
+      coverImgUrl: 1,
+      category: 1,
+      tags: 1,
+      user: 1,
+      isPublic: 1,
+      cookingTime: 1,
+      servings: 1,
+      collects: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    };
+
+    const { results, pagination } = await paginationUtils({
+      model: Recipe,
+      query,
+      sort,
+      displayFields,
+      page,
+      perPage,
+    });
+
+    successHandler(res, 200, { results, pagination });
   },
 
   // 刪除指定食譜

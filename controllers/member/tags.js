@@ -7,7 +7,7 @@ const TagControllers = {
   // 取得全部標籤
   async getAllTags(req, res, next) {
     // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort == "asc" ? "updatedAt" : "-updatedAt";
+    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
     const tags = await Tag.find({}, { title: 1, _id: 1 }).sort(sort);
 
     successHandler(res, 200, tags);
