@@ -104,7 +104,6 @@ const RecipeControllers = {
       nutritionFacts,
       steps,
       note,
-      collects: [],
     });
 
     successHandler(res, 201, recipe);
@@ -131,7 +130,6 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
-      collects: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -335,7 +333,6 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
-      collects: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -373,6 +370,9 @@ const RecipeControllers = {
       return appError(400, "刪除失敗，查無此食譜 ID", next);
     }
 
+    // 刪除食譜後，將該食譜從所有使用者的收藏清單中移除
+    await User.updateMany({}, { $pull: { collects: recipeId } });
+
     successHandler(res, 200, delRecipe);
   },
 
@@ -388,14 +388,35 @@ const RecipeControllers = {
       return appError(400, "查無此會員！", next);
     }
 
+    // 查找指定會員擁有的所有食譜 ID
+    const userRecipes = await Recipe.find({ user: memberId }).select("_id");
+
+    // 將食譜 ID 提取為陣列
+    const recipeIds = userRecipes.map((recipe) => recipe._id);
+
+    // 刪除指定會員擁有的所有食譜
     await Recipe.deleteMany({ user: memberId });
+
+    if (recipeIds.length) {
+      // 從其他會員的收藏清單中移除此會員擁有的食譜 ID
+      await User.updateMany(
+        // 找到收藏了這些食譜的會員
+        { collects: { $in: recipeIds } },
+        // 從收藏清單中移除
+        { $pull: { collects: { $in: recipeIds } } }
+      );
+    }
 
     successHandler(res, 200, []);
   },
 
   // 刪除所有食譜
   async delAllRecipes(req, res, next) {
+    // 刪除所有食譜
     await Recipe.deleteMany({});
+
+    // 清空所有會員的收藏清單
+    await User.updateMany({}, { $set: { collects: [] } });
 
     successHandler(res, 200, []);
   },

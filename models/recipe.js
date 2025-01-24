@@ -105,12 +105,6 @@ const recipeSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    collects: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "user",
-      },
-    ],
   },
   {
     // 不顯示預設在 document 中加上的 __v: 0

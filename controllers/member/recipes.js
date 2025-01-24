@@ -48,7 +48,6 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
-      collects: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -116,7 +115,6 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
-      collects: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -196,7 +194,6 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
-      collects: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -327,7 +324,6 @@ const RecipeControllers = {
       nutritionFacts,
       steps,
       note,
-      collects: [],
     });
 
     successHandler(res, 201, recipe);
@@ -487,6 +483,9 @@ const RecipeControllers = {
       return appError(400, "刪除失敗，查無此食譜 ID", next);
     }
 
+    // 刪除食譜後，將該食譜從所有使用者的收藏清單中移除
+    await User.updateMany({}, { $pull: { collects: recipeId } });
+
     successHandler(res, 200, delRecipe);
   },
 
@@ -503,8 +502,8 @@ const RecipeControllers = {
       return appError(400, "收藏失敗，查無此食譜！", next);
     }
 
-    await Recipe.findByIdAndUpdate(recipeId, {
-      $addToSet: { collects: auth._id },
+    await User.findByIdAndUpdate(auth._id, {
+      $addToSet: { collects: recipeId },
     });
 
     const data = {
@@ -528,8 +527,8 @@ const RecipeControllers = {
       return appError(400, "取消收藏失敗，查無此食譜！", next);
     }
 
-    await Recipe.findByIdAndUpdate(recipeId, {
-      $pull: { collects: auth._id },
+    await User.findByIdAndUpdate(auth._id, {
+      $pull: { collects: recipeId },
     });
 
     const data = {

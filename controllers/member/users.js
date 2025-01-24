@@ -244,7 +244,7 @@ const UserControllers = {
 
     // 預設搜尋條件
     const query = {
-      collects: { $in: [auth._id] },
+      _id: { $in: auth.collects },
       isPublic: true,
     };
 
@@ -275,7 +275,6 @@ const UserControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
-      collects: 1,
       createdAt: 1,
       updatedAt: 1,
     };

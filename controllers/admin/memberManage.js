@@ -171,6 +171,30 @@ const MemberControllers = {
     successHandler(res, 200, newMember);
   },
 
+  // // 刪除指定會員
+  // async delMember(req, res, next) {
+  //   const { memberId } = req.params;
+
+  //   if (!validationUtils.isValidObjectId(memberId)) {
+  //     return appError(400, "會員 ID 錯誤！", next);
+  //   }
+
+  //   if (!(await validationUtils.isIdExist(User, memberId))) {
+  //     return appError(400, "查無此會員！", next);
+  //   }
+
+  //   const delMember = await User.findByIdAndDelete(memberId, {
+  //     new: true,
+  //   });
+
+  //   // 若刪除失敗
+  //   if (!delMember) {
+  //     return appError(400, "刪除失敗，查無此會員", next);
+  //   }
+
+  //   successHandler(res, 200, delMember);
+  // },
+
   // 刪除指定會員
   async delMember(req, res, next) {
     const { memberId } = req.params;
@@ -183,14 +207,29 @@ const MemberControllers = {
       return appError(400, "查無此會員！", next);
     }
 
+    // 查找指定會員擁有的所有食譜 ID
+    const userRecipes = await Recipe.find({ user: memberId }).select("_id");
+
+    // 將食譜 ID 提取為陣列
+    const recipeIds = userRecipes.map((recipe) => recipe._id);
+
+    // 刪除指定會員擁有的所有食譜
+    await Recipe.deleteMany({ user: memberId });
+
+    if (recipeIds.length > 0) {
+      // 從其他會員的收藏清單中移除此會員擁有的食譜 ID
+      await User.updateMany(
+        // 找到收藏了這些食譜的會員
+        { collects: { $in: recipeIds } },
+        // 從收藏清單中移除
+        { $pull: { collects: { $in: recipeIds } } }
+      );
+    }
+
+    // 刪除指定會員
     const delMember = await User.findByIdAndDelete(memberId, {
       new: true,
     });
-
-    // 若刪除失敗
-    if (!delMember) {
-      return appError(400, "刪除失敗，查無此會員", next);
-    }
 
     successHandler(res, 200, delMember);
   },
