@@ -9,8 +9,13 @@ const User = require("../../models/user");
 const RecipeControllers = {
   // 取得所有公開食譜
   async getAllPublicRecipes(req, res, next) {
-    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
+    // 排序
+    const sortOptions = {
+      asc: "updatedAt", // 更新日期從新到舊排序
+      desc: "-updatedAt", // 更新日期從舊到新排序
+      hot: "collectsCount", // 收藏從多到少排序
+    };
+    const sort = sortOptions[req.query.sort] || "-updatedAt";
 
     // 第幾頁，預設為 1
     const page = req.query.page ? Number(req.query.page) : 1;
@@ -48,6 +53,7 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
+      collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -76,8 +82,13 @@ const RecipeControllers = {
       return appError(400, "查無此會員！", next);
     }
 
-    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
+    // 排序
+    const sortOptions = {
+      asc: "updatedAt", // 更新日期從新到舊排序
+      desc: "-updatedAt", // 更新日期從舊到新排序
+      hot: "collectsCount", // 收藏從多到少排序
+    };
+    const sort = sortOptions[req.query.sort] || "-updatedAt";
 
     // 第幾頁，預設為 1
     const page = req.query.page ? Number(req.query.page) : 1;
@@ -115,6 +126,7 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
+      collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -155,8 +167,13 @@ const RecipeControllers = {
   async getAllMyRecipes(req, res, next) {
     const { auth } = req;
 
-    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
+    // 排序
+    const sortOptions = {
+      asc: "updatedAt", // 更新日期從新到舊排序
+      desc: "-updatedAt", // 更新日期從舊到新排序
+      hot: "collectsCount", // 收藏從多到少排序
+    };
+    const sort = sortOptions[req.query.sort] || "-updatedAt";
 
     // 第幾頁，預設為 1
     const page = req.query.page ? Number(req.query.page) : 1;
@@ -194,6 +211,7 @@ const RecipeControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
+      collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
     };
@@ -502,9 +520,20 @@ const RecipeControllers = {
       return appError(400, "收藏失敗，查無此食譜！", next);
     }
 
-    await User.findByIdAndUpdate(auth._id, {
-      $addToSet: { collects: recipeId },
-    });
+    // 使用 $addToSet 將食譜 ID 加入 User 的 collects 陣列
+    const result = await User.findByIdAndUpdate(
+      auth._id,
+      {
+        $addToSet: { collects: recipeId },
+      },
+      { new: true }
+    );
+
+    // 如果更新前後的收藏數量不同，表示有新增成功
+    if (result.collects.length > auth.collects.length) {
+      // 使用 $inc 將 Recipe 的 collectsCount +1
+      await Recipe.updateOne({ _id: recipeId }, { $inc: { collectsCount: 1 } });
+    }
 
     const data = {
       recipeId,
@@ -527,9 +556,26 @@ const RecipeControllers = {
       return appError(400, "取消收藏失敗，查無此食譜！", next);
     }
 
-    await User.findByIdAndUpdate(auth._id, {
-      $pull: { collects: recipeId },
-    });
+    // 使用 $pull 將食譜 ID 從 User 的 collects 陣列中移除
+    const result = await User.findByIdAndUpdate(
+      auth._id,
+      {
+        $pull: { collects: recipeId },
+      },
+      { new: true }
+    );
+
+    // 如果更新前後的收藏數量不同，表示有新增成功
+    if (
+      auth.collects.length > result.collects.length &&
+      result.collects.length > 0
+    ) {
+      // 使用 $inc 將 Recipe 的 collectsCount -1
+      await Recipe.updateOne(
+        { _id: recipeId },
+        { $inc: { collectsCount: -1 } }
+      );
+    }
 
     const data = {
       recipeId,

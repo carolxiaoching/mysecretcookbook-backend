@@ -105,6 +105,11 @@ const recipeSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    collectsCount: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
   },
   {
     // 不顯示預設在 document 中加上的 __v: 0

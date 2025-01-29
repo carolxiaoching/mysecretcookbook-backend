@@ -233,8 +233,13 @@ const UserControllers = {
   async getCollectList(req, res, next) {
     const { auth } = req;
 
-    // 預設按更新日期從新到舊排序 (desc)，若為 asc 則從舊到新排序
-    const sort = req.query.sort === "asc" ? "updatedAt" : "-updatedAt";
+    // 排序
+    const sortOptions = {
+      asc: "updatedAt", // 更新日期從新到舊排序
+      desc: "-updatedAt", // 更新日期從舊到新排序
+      hot: "collectsCount", // 收藏從多到少排序
+    };
+    const sort = sortOptions[req.query.sort] || "-updatedAt";
 
     // 第幾頁，預設為 1
     const page = req.query.page ? Number(req.query.page) : 1;
@@ -275,6 +280,7 @@ const UserControllers = {
       isPublic: 1,
       cookingTime: 1,
       servings: 1,
+      collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
     };
