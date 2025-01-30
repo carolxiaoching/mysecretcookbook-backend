@@ -40,7 +40,7 @@ const RecipeControllers = {
     if (req.query.tags) {
       // 將 tags 字串分割為陣列
       const tagsArray = req.query.tags.split(",");
-      query.tags = { $in: tagsArray };
+      query.tags = { $all: tagsArray };
     }
 
     const displayFields = {
@@ -113,7 +113,7 @@ const RecipeControllers = {
     if (req.query.tags) {
       // 將 tags 字串分割為陣列
       const tagsArray = req.query.tags.split(",");
-      query.tags = { $in: tagsArray };
+      query.tags = { $all: tagsArray };
     }
 
     const displayFields = {
@@ -198,7 +198,7 @@ const RecipeControllers = {
     if (req.query.tags) {
       // 將 tags 字串分割為陣列
       const tagsArray = req.query.tags.split(",");
-      query.tags = { $in: tagsArray };
+      query.tags = { $all: tagsArray };
     }
 
     const displayFields = {
