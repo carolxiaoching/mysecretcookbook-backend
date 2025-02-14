@@ -116,14 +116,33 @@ const UserControllers = {
       return appError(400, "查無此會員！", next);
     }
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).lean();
+
+    // 計算擁有食譜數量
+    const recipeCount = await Recipe.countDocuments({ user: userId });
+
+    // 計算收藏數量
+    const collectCount = await user.collects.length;
+
+    user.recipeCount = recipeCount;
+    user.collectCount = collectCount;
+
     successHandler(res, 200, user);
   },
 
   // 取得我的資料
   async getMyProfile(req, res, next) {
     const { auth } = req;
-    const user = await User.findById(auth._id).select("+email");
+    const user = await User.findById(auth._id).select("+email").lean();
+
+    // 計算擁有食譜數量
+    const recipeCount = await Recipe.countDocuments({ user: auth._id });
+
+    // 計算收藏數量
+    const collectCount = await user.collects.length;
+
+    user.recipeCount = recipeCount;
+    user.collectCount = collectCount;
 
     successHandler(res, 200, user);
   },
@@ -179,7 +198,16 @@ const UserControllers = {
         runValidators: true,
         fields: "+email", // 顯示隱藏的 email 字段
       }
-    );
+    ).lean();
+
+    // 計算擁有食譜數量
+    const recipeCount = await Recipe.countDocuments({ user: auth._id });
+
+    // 計算收藏數量
+    const collectCount = await newUser.collects.length;
+
+    newUser.recipeCount = recipeCount;
+    newUser.collectCount = collectCount;
 
     successHandler(res, 200, newUser);
   },

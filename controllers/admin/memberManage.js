@@ -5,6 +5,7 @@ const validationUtils = require("../../utils/validationUtils");
 const paginationUtils = require("../../utils/paginationUtils");
 const { generateAndSendJWT } = require("../../middleware/authMiddleware");
 const User = require("../../models/user");
+const Recipe = require("../../models/recipe");
 
 const MemberControllers = {
   // 管理員登入
@@ -102,14 +103,24 @@ const MemberControllers = {
       return appError(400, "查無此會員！", next);
     }
 
-    const member = await User.findById(memberId).select("+email +role");
+    const member = await User.findById(memberId).select("+email +role").lean();
+
+    // 計算擁有食譜數量
+    const recipeCount = await Recipe.countDocuments({ user: memberId });
+
+    // 計算收藏數量
+    const collectCount = await member.collects.length;
+
+    member.recipeCount = recipeCount;
+    member.collectCount = collectCount;
+
     successHandler(res, 200, member);
   },
 
   // 更新指定會員資料
   async updateMember(req, res, next) {
     const { memberId } = req.params;
-    const { nickName, gender, avatarImgUrl, role } = req.body;
+    const { nickName, gender, avatarImgUrl, role, description } = req.body;
 
     const validations = [
       {
@@ -166,7 +177,16 @@ const MemberControllers = {
         runValidators: true,
         fields: "+email +role", // 顯示預設隱藏的 email、role
       }
-    );
+    ).lean();
+
+    // 計算擁有食譜數量
+    const recipeCount = await Recipe.countDocuments({ user: memberId });
+
+    // 計算收藏數量
+    const collectCount = await newMember.collects.length;
+
+    newMember.recipeCount = recipeCount;
+    newMember.collectCount = collectCount;
 
     successHandler(res, 200, newMember);
   },
