@@ -306,6 +306,7 @@ const UserControllers = {
       tags: 1,
       user: 1,
       isPublic: 1,
+      description: 1,
       cookingTime: 1,
       servings: 1,
       collectsCount: 1,
