@@ -184,7 +184,16 @@ const RecipeControllers = {
     const perPage = req.query.perPage ? Number(req.query.perPage) : 10;
 
     // 預設搜尋條件
-    const query = { user: auth._id, isPublic: true };
+    let query = { user: auth._id };
+
+    // 分類搜尋
+    if (req.query.isPublic) {
+      const isPublic = req.query.isPublic === "true" ? true : false;
+      query = {
+        user: auth._id,
+        isPublic: isPublic,
+      };
+    }
 
     // 分類搜尋
     if (req.query.category) {
