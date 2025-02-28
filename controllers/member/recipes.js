@@ -145,21 +145,34 @@ const RecipeControllers = {
     successHandler(res, 200, { results, pagination });
   },
 
-  // 取得指定公開食譜
-  async getPublicRecipe(req, res, next) {
+  // 取得指定食譜
+  async getRecipe(req, res, next) {
     const { recipeId } = req.params;
+    const { authId } = req;
 
     if (!validationUtils.isValidObjectId(recipeId)) {
       return appError(400, "食譜 ID 錯誤！", next);
     }
 
-    const recipe = await Recipe.findOne({
-      _id: recipeId,
-      isPublic: true,
-    });
+    let query = authId
+      ? {
+          _id: recipeId,
+        }
+      : {
+          _id: recipeId,
+          isPublic: true,
+        };
 
+    const recipe = await Recipe.findOne(query);
+
+    // 檢查是否查找到食譜
     if (!recipe) {
       return appError(400, "查無此食譜或權限不足！", next);
+    }
+
+    // 權限檢查：非公開食譜只有作者可以查看
+    if (!recipe.isPublic && !recipe.user._id.equals(authId)) {
+      return appError(403, "您沒有權限查看此食譜！", next);
     }
 
     successHandler(res, 200, recipe);
@@ -238,27 +251,6 @@ const RecipeControllers = {
     });
 
     successHandler(res, 200, { results, pagination });
-  },
-
-  // 取得我的食譜
-  async getMyRecipe(req, res, next) {
-    const { recipeId } = req.params;
-    const { auth } = req;
-
-    if (!validationUtils.isValidObjectId(recipeId)) {
-      return appError(400, "食譜 ID 錯誤！", next);
-    }
-
-    const recipe = await Recipe.findOne({
-      _id: recipeId,
-      user: auth._id,
-    });
-
-    if (!recipe) {
-      return appError(400, "查無此食譜或權限不足！", next);
-    }
-
-    successHandler(res, 200, recipe);
   },
 
   // 新增食譜

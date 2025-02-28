@@ -83,28 +83,22 @@ const isAdmin = errorAsyncHandler(async (req, res, next) => {
   next();
 });
 
-// 確認登入狀態，若已登入則取得會員資料，未登入或登入失敗則跳過
-// const optionalAuth = errorAsyncHandler(async (req, res, next) => {
-//   const token = getTokenFromHeaders(req.headers);
-
-//   if (token) {
-//     const decoded = await verifyToken(token);
-//     req.authId = decoded.id;
-
-//     const user = await User.findById(req.authId);
-
-//     if (user) {
-//       req.auth = user;
-//     }
-//   }
-
-//   next();
-// });
+// 檢查 token 並設定 authId =>
+const optionalAuth = errorAsyncHandler(async (req, res, next) => {
+  const token = getTokenFromHeaders(req.headers);
+  if (token) {
+    const decoded = await verifyToken(token);
+    req.authId = decoded.id;
+  } else {
+    req.authId = null;
+  }
+  next();
+});
 
 module.exports = {
   generateAndSendJWT,
   checkTokenAndSetAuth,
   getUserFromAuthId,
   isAdmin,
-  // optionalAuth,
+  optionalAuth,
 };
