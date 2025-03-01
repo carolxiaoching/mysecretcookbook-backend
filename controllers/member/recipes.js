@@ -328,6 +328,11 @@ const RecipeControllers = {
         condition: !validationUtils.isValidSteps(steps),
         message: "步驟欄位錯誤！",
       },
+      {
+        condition:
+          tags !== undefined && !(await validationUtils.isValidTags(tags)),
+        message: "標籤欄位錯誤，且每個食譜最多只能有 3 個標籤！",
+      },
     ];
 
     validationUtils.checkValidation(validations, next);
@@ -448,6 +453,11 @@ const RecipeControllers = {
       {
         condition: steps !== undefined && !validationUtils.isValidSteps(steps),
         message: "步驟欄位錯誤！",
+      },
+      {
+        condition:
+          tags !== undefined && !(await validationUtils.isValidTags(tags)),
+        message: "標籤欄位錯誤，且每個食譜最多只能有 3 個標籤！",
       },
     ];
 

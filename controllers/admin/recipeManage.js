@@ -71,7 +71,8 @@ const RecipeControllers = {
         message: "查無此分類！",
       },
       {
-        condition: !(await validationUtils.isValidTags(tags)),
+        condition:
+          tags !== undefined && !(await validationUtils.isValidTags(tags)),
         message: "標籤欄位錯誤，且每個食譜最多只能有 3 個標籤！",
       },
       {
