@@ -26,6 +26,12 @@ const RecipeControllers = {
     // 預設搜尋條件
     const query = { isPublic: true };
 
+    // 編輯推薦搜尋
+    if (req.query.isRecommended) {
+      const isRecommended = req.query.isRecommended === "true" ? true : false;
+      query.isRecommended = isRecommended;
+    }
+
     // 分類搜尋
     if (req.query.category) {
       query.category = req.query.category;
