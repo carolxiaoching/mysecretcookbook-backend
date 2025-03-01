@@ -22,6 +22,7 @@ const RecipeControllers = {
       ingredients,
       nutritionFacts,
       steps,
+      isRecommended,
     } = req.body;
     const { auth } = req;
 
@@ -87,6 +88,11 @@ const RecipeControllers = {
         condition: !validationUtils.isValidSteps(steps),
         message: "步驟欄位錯誤！",
       },
+      {
+        condition:
+          isRecommended !== undefined && typeof isRecommended !== "boolean",
+        message: "編輯推薦狀態格式錯誤！",
+      },
     ];
 
     validationUtils.checkValidation(validations, next);
@@ -105,6 +111,7 @@ const RecipeControllers = {
       nutritionFacts,
       steps,
       note,
+      isRecommended,
     });
 
     successHandler(res, 201, recipe);
@@ -140,6 +147,7 @@ const RecipeControllers = {
       collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
+      isRecommended: 1,
     };
 
     // 判斷是否不分頁
@@ -196,6 +204,7 @@ const RecipeControllers = {
       ingredients,
       nutritionFacts,
       steps,
+      isRecommended,
     } = req.body;
 
     const validations = [
@@ -278,6 +287,11 @@ const RecipeControllers = {
         condition: steps !== undefined && !validationUtils.isValidSteps(steps),
         message: "步驟欄位錯誤！",
       },
+      {
+        condition:
+          isRecommended !== undefined && typeof isRecommended !== "boolean",
+        message: "編輯推薦狀態格式錯誤！",
+      },
     ];
 
     validationUtils.checkValidation(validations, next);
@@ -297,6 +311,7 @@ const RecipeControllers = {
         nutritionFacts,
         steps,
         note,
+        isRecommended,
       },
       {
         new: true,

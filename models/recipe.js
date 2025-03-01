@@ -110,6 +110,10 @@ const recipeSchema = new mongoose.Schema(
       min: 0,
       default: 0,
     },
+    isRecommended: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     // 不顯示預設在 document 中加上的 __v: 0

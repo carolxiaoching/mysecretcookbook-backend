@@ -57,6 +57,7 @@ const RecipeControllers = {
       collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
+      isRecommended: 1,
     };
 
     const { results, pagination } = await paginationUtils({
@@ -131,6 +132,7 @@ const RecipeControllers = {
       collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
+      isRecommended: 1,
     };
 
     const { results, pagination } = await paginationUtils({
@@ -239,6 +241,7 @@ const RecipeControllers = {
       collectsCount: 1,
       createdAt: 1,
       updatedAt: 1,
+      isRecommended: 1,
     };
 
     const { results, pagination } = await paginationUtils({
