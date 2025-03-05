@@ -1,13 +1,13 @@
-const tinify = require("tinify");
+const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const successHandler = require("../../services/successHandler");
 const appError = require("../../services/appError");
 const firebaseAdmin = require("../../connections/firebase");
 const validationUtils = require("../../utils/validationUtils");
 const Image = require("../../models/image");
+const { compressImage, uploadToStorage } = require("../../utils/imageUtils");
 
 const bucket = firebaseAdmin.storage().bucket();
-tinify.key = process.env.TINYPNG_API_KEY;
 
 const ImageControllers = {
   // 上傳圖片
@@ -25,56 +25,37 @@ const ImageControllers = {
       return appError(400, "尚未上傳圖片！", next);
     }
 
-    // 取得上傳檔案資訊列表的第一個檔案
-    const file = req.files[0];
+    try {
+      // 取得上傳檔案資訊列表的第一個檔案
+      const file = req.files[0];
+      // 取得附檔名
+      const ext = path.extname(file.originalname).toLowerCase();
 
-    // 上傳圖片到 TinyPNG 並壓縮
-    tinify.fromBuffer(file.buffer).toBuffer((err, resultData) => {
-      if (err) {
-        throw err;
-      }
+      // 壓縮檔案
+      const compressedImage = await compressImage(file.buffer, ext);
+      // 設置路徑
+      const imagePath = `images/${auth._id}/${uuidv4()}${ext}`;
 
-      const imagePath = `images/${auth._id}/${uuidv4()}.${file.originalname
-        .split(".")
-        .pop()}`;
+      // 將資料上傳至 firebase storage 並取得檔案連結
+      const imageUrl = await uploadToStorage(imagePath, compressedImage);
 
-      // 基於檔案的原始名稱建立一個 blob 物件
-      const blob = bucket.file(imagePath);
-      // 建立一個可以寫入 blob 的物件
-      const blobStream = blob.createWriteStream();
-      // 監聽上傳狀態，當上傳完成時，會觸發 finish 事件
-      blobStream.on("finish", () => {
-        // 設定檔案的存取權限
-        const config = {
-          action: "read", // 權限
-          expires: "12-31-2500", // 網址的有效期限
-        };
-        // 取得檔案的網址
-        blob.getSignedUrl(config, async (err, imageUrl) => {
-          // 將圖片資料加入到資料庫中
-          const data = await Image.create({
-            imageUrl,
-            imagePath,
-            type,
-            user: auth._id,
-          });
-
-          const result = {
-            _id: data._id,
-            type: data.type,
-            imageUrl: data.imageUrl,
-          };
-
-          return successHandler(res, 201, result);
-        });
+      const data = await Image.create({
+        imageUrl,
+        imagePath,
+        type,
+        user: auth._id,
       });
-      // 如果上傳過程中發生錯誤，會觸發 error 事件
-      blobStream.on("error", (err) => {
-        return appError(500, "上傳失敗", next);
-      });
-      // 將檔案的 buffer 寫入 blobStream
-      blobStream.end(resultData);
-    });
+
+      const result = {
+        _id: data._id,
+        type: data.type,
+        imageUrl: data.imageUrl,
+      };
+
+      return successHandler(res, 201, result);
+    } catch (err) {
+      return appError(500, "上傳失敗", next);
+    }
   },
 
   // 刪除指定圖片
