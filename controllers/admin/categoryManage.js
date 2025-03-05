@@ -55,7 +55,7 @@ const CategoryControllers = {
 
   // 新增分類
   async createCategory(req, res, next) {
-    const { title } = req.body;
+    const { title, categoryImgUrl } = req.body;
 
     if (!validationUtils.isObjectEmpty(req.body)) {
       return appError(400, "欄位不得為空！", next);
@@ -65,9 +65,14 @@ const CategoryControllers = {
       return appError(400, "分類標題需介於 1 到 10 個字元之間！", next);
     }
 
+    if (!validationUtils.isValidUrl(categoryImgUrl)) {
+      return appError(400, "分類圖片格式錯誤！", next);
+    }
+
     // 新增資料
     const category = await Category.create({
       title,
+      categoryImgUrl,
     });
 
     successHandler(res, 201, category);
@@ -76,7 +81,7 @@ const CategoryControllers = {
   // 更新分類
   async updateCategory(req, res, next) {
     const { categoryId } = req.params;
-    const { title } = req.body;
+    const { title, categoryImgUrl } = req.body;
 
     const validations = [
       {
@@ -95,6 +100,12 @@ const CategoryControllers = {
         condition: !validationUtils.isValidString(title, 1, 10),
         message: "分類標題需介於 1 到 10 個字元之間！",
       },
+      {
+        condition:
+          categoryImgUrl !== undefined &&
+          !validationUtils.isValidUrl(categoryImgUrl),
+        message: "封面格式錯誤！",
+      },
     ];
 
     validationUtils.checkValidation(validations, next);
@@ -103,6 +114,7 @@ const CategoryControllers = {
       categoryId,
       {
         title,
+        categoryImgUrl,
       },
       {
         new: true,
