@@ -13,7 +13,7 @@ const imageSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: {
-        values: ["avatar", "photo"],
+        values: ["avatar", "photo", "icon"],
         message: "請輸入圖片類型",
       },
       default: "photo",

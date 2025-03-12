@@ -16,7 +16,7 @@ const ImageControllers = {
     const type = req.query?.type ? req.query.type : "photo";
 
     // 確認圖片類型
-    if (type !== "photo" && type !== "avatar") {
+    if (type !== "photo" && type !== "avatar" && type !== "icon") {
       return appError(400, "圖片類型錯誤！", next);
     }
 
