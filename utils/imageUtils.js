@@ -1,60 +1,22 @@
+const tinify = require("tinify");
 const firebaseAdmin = require("../connections/firebase");
-const bucket = firebaseAdmin.storage().bucket();
 
-const imagemin = require("imagemin");
-// png 壓縮
-const imageminPngquant = require("imagemin-pngquant");
-// jpg/jpeg 壓縮
-const imageminMozjpeg = require("imagemin-mozjpeg");
-// svg 壓縮
-const imageminSvgo = require("imagemin-svgo");
+const bucket = firebaseAdmin.storage().bucket();
+tinify.key = process.env.TINYPNG_API_KEY;
 
 // 壓縮檔案
 const compressImage = async (buffer, ext) => {
-  if (ext === ".svg") {
-    console.log("壓縮 SVG");
-
-    const result = await imagemin.buffer(buffer, {
-      plugins: [
-        imageminSvgo({
-          name: "preset-default",
-          params: {
-            overrides: {
-              removeViewBox: false,
-            },
-          },
-        }),
-      ],
-    });
-
-    return result;
-  } else if (ext === ".png") {
-    console.log("壓縮 PNG");
-
-    const result = await imagemin.buffer(buffer, {
-      plugins: [
-        imageminPngquant({
-          quality: [0.6, 0.8], // 調整 PNG 品質
-        }),
-      ],
-    });
-
-    return result;
-  } else if (ext === ".jpg" || ext === ".jpeg") {
-    console.log("壓縮 JPG/JPEG");
-
-    const result = await imagemin.buffer(buffer, {
-      plugins: [
-        imageminMozjpeg({
-          quality: 75, // 調整 JPG 品質
-        }),
-      ],
-    });
-
-    return result;
+  if ([".jpg", ".png", ".jpeg", ".webp"].includes(ext)) {
+    try {
+      const compressedBuffer = await tinify.fromBuffer(buffer).toBuffer();
+      return compressedBuffer;
+    } catch (err) {
+      console.log("圖片壓縮失敗:", err);
+      return buffer; // 壓縮失敗，則回傳原始 buffer
+    }
   } else {
     console.log("不支援的圖片格式");
-    return buffer; // 若格式不支援，直接回傳原始 buffer
+    return buffer; // 若格式不支援，則回傳原始 buffer
   }
 };
 
