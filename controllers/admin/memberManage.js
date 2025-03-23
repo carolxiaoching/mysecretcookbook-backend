@@ -85,6 +85,7 @@ const MemberControllers = {
         sort,
         page,
         perPage,
+        select: "+email +role",
       });
 
       successHandler(res, 200, { results, pagination });
@@ -190,30 +191,6 @@ const MemberControllers = {
 
     successHandler(res, 200, newMember);
   },
-
-  // // 刪除指定會員
-  // async delMember(req, res, next) {
-  //   const { memberId } = req.params;
-
-  //   if (!validationUtils.isValidObjectId(memberId)) {
-  //     return appError(400, "會員 ID 錯誤！", next);
-  //   }
-
-  //   if (!(await validationUtils.isIdExist(User, memberId))) {
-  //     return appError(400, "查無此會員！", next);
-  //   }
-
-  //   const delMember = await User.findByIdAndDelete(memberId, {
-  //     new: true,
-  //   });
-
-  //   // 若刪除失敗
-  //   if (!delMember) {
-  //     return appError(400, "刪除失敗，查無此會員", next);
-  //   }
-
-  //   successHandler(res, 200, delMember);
-  // },
 
   // 刪除指定會員
   async delMember(req, res, next) {
