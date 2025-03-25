@@ -182,10 +182,6 @@
                           "type": "string",
                           "example": "Carol"
                         },
-                        "email": {
-                          "type": "string",
-                          "example": "carol@gmail.com"
-                        },
                         "avatarImgUrl": {
                           "type": "string",
                           "example": ""
@@ -228,53 +224,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "回傳成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "62a5aa24af18b27296d42a82"
-                    },
-                    "nickName": {
-                      "type": "string",
-                      "example": "Carol"
-                    },
-                    "avatarImgUrl": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "secret"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2024-08-02T17:08:01.747Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2024-08-02T17:08:01.747Z"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
+          "default": {
+            "description": ""
           }
         }
       }
@@ -301,23 +252,19 @@
                   "properties": {
                     "_id": {
                       "type": "string",
-                      "example": "66ad12532a4c0826b5b65f3b"
+                      "example": "66ad12712a4c0826b5b65f55"
                     },
                     "nickName": {
                       "type": "string",
-                      "example": "Carol"
+                      "example": "carol"
                     },
                     "gender": {
                       "type": "string",
-                      "example": "secret"
+                      "example": "female"
                     },
                     "avatarImgUrl": {
                       "type": "string",
-                      "example": "https://123.png"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": ""
+                      "example": "https://123.jpg"
                     },
                     "email": {
                       "type": "string",
@@ -325,11 +272,32 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-02T17:07:31.743Z"
+                      "example": "2025-01-02T17:08:01.747Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-07T17:02:49.701Z"
+                      "example": "2025-03-24T05:25:50.590Z"
+                    },
+                    "collects": {
+                      "type": "array",
+                      "example": [
+                        "66eb7243c9d1a16bd4fc3ac5"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "hi"
+                    },
+                    "recipeCount": {
+                      "type": "number",
+                      "example": 6
+                    },
+                    "collectCount": {
+                      "type": "number",
+                      "example": 7
                     }
                   }
                 }
@@ -384,23 +352,19 @@
                   "properties": {
                     "_id": {
                       "type": "string",
-                      "example": "66ad12532a4c0826b5b65f3b"
+                      "example": "66ad12712a4c0826b5b65f55"
                     },
                     "nickName": {
                       "type": "string",
-                      "example": "Carol"
+                      "example": "carol"
                     },
                     "gender": {
                       "type": "string",
-                      "example": "secret"
+                      "example": "female"
                     },
                     "avatarImgUrl": {
                       "type": "string",
-                      "example": "https://123.png"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": ""
+                      "example": "https://123.jpg"
                     },
                     "email": {
                       "type": "string",
@@ -408,11 +372,32 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-02T17:07:31.743Z"
+                      "example": "2025-01-02T17:08:01.747Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-07T17:02:49.701Z"
+                      "example": "2025-03-24T05:25:50.590Z"
+                    },
+                    "collects": {
+                      "type": "array",
+                      "example": [
+                        "66eb7243c9d1a16bd4fc3ac5"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "hi"
+                    },
+                    "recipeCount": {
+                      "type": "number",
+                      "example": 6
+                    },
+                    "collectCount": {
+                      "type": "number",
+                      "example": 7
                     }
                   }
                 }
@@ -498,14 +483,6 @@
                     "email": {
                       "type": "string",
                       "example": "carol@mail.com"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2024-08-02T17:07:31.743Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2024-08-07T17:02:49.701Z"
                     }
                   }
                 }
@@ -530,9 +507,220 @@
         ],
         "summary": "取得我的收藏列表",
         "description": "取得我的收藏列表",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "enum": {
+                  "type": "array",
+                  "example": [
+                    "asc",
+                    "desc",
+                    "hot"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "default": {
+                  "type": "string",
+                  "example": "desc"
+                }
+              }
+            },
+            "description": "依更新日期、收藏排序，預設為 desc"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "default": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            },
+            "description": "第幾頁，預設為 1"
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "default": {
+                  "type": "number",
+                  "example": 10
+                }
+              }
+            },
+            "description": "每頁幾筆，預設為 10"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "分類搜尋"
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "關鍵字搜尋"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "標籤搜尋"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "回傳成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6789f201862fb3b01124e466"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "雞肉丼飯"
+                          },
+                          "coverImgUrl": {
+                            "type": "string",
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
+                            }
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         },
         "security": [
@@ -797,148 +985,109 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "午後紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "66ad17220c1f2d5e934ba5d5"
-                      },
-                      "user": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
+                            "example": "6789f201862fb3b01124e466"
                           },
-                          "nickName": {
+                          "title": {
                             "type": "string",
-                            "example": "carol"
+                            "example": "雞肉丼飯"
                           },
-                          "avatarImgUrl": {
+                          "coverImgUrl": {
                             "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
                             }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
                             }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
                           }
                         }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
                         }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
                       }
                     }
                   }
@@ -985,148 +1134,109 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "午後紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "66ad17220c1f2d5e934ba5d5"
-                      },
-                      "user": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
+                            "example": "6789f201862fb3b01124e466"
                           },
-                          "nickName": {
+                          "title": {
                             "type": "string",
-                            "example": "carol"
+                            "example": "雞肉丼飯"
                           },
-                          "avatarImgUrl": {
+                          "coverImgUrl": {
                             "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
                             }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
                             }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
                           }
                         }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
                         }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
                       }
                     }
                   }
@@ -1140,13 +1250,13 @@
         }
       }
     },
-    "/api/publicRecipe/{recipeId}": {
+    "/api/recipe/{recipeId}": {
       "get": {
         "tags": [
           "Recipe 食譜"
         ],
-        "summary": "取得指定公開食譜",
-        "description": "取得指定公開食譜",
+        "summary": "取得指定食譜",
+        "description": "取得指定食譜",
         "parameters": [
           {
             "name": "recipeId",
@@ -1308,11 +1418,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
                     }
                   }
                 }
@@ -1323,376 +1433,6 @@
             }
           }
         }
-      }
-    },
-    "/api/recipes": {
-      "get": {
-        "tags": [
-          "Recipe 食譜"
-        ],
-        "summary": "取得我的所有食譜",
-        "description": "取得我的所有食譜",
-        "parameters": [
-          {
-            "name": "sort",
-            "in": "query",
-            "type": "string",
-            "description": "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "回傳成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "66ad17220c1f2d5e934ba5d5"
-                      },
-                      "user": {
-                        "type": "object",
-                        "properties": {
-                          "_id": {
-                            "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
-                          },
-                          "nickName": {
-                            "type": "string",
-                            "example": "carol"
-                          },
-                          "avatarImgUrl": {
-                            "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
-                            }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
-                            }
-                          }
-                        }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
-                      }
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
-    "/api/recipe/{recipeId}": {
-      "get": {
-        "tags": [
-          "Recipe 食譜"
-        ],
-        "summary": "取得我的食譜",
-        "description": "取得我的食譜",
-        "parameters": [
-          {
-            "name": "recipeId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "食譜 ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "回傳成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "nutritionFacts": {
-                      "type": "object",
-                      "properties": {
-                        "calories": {
-                          "type": "number",
-                          "example": 0
-                        },
-                        "protein": {
-                          "type": "number",
-                          "example": 0
-                        },
-                        "totalFat": {
-                          "type": "number",
-                          "example": 0
-                        },
-                        "totalCarb": {
-                          "type": "number",
-                          "example": 0
-                        },
-                        "sodium": {
-                          "type": "number",
-                          "example": 0
-                        },
-                        "sugar": {
-                          "type": "number",
-                          "example": 0
-                        }
-                      }
-                    },
-                    "_id": {
-                      "type": "string",
-                      "example": "66b50fa7e845914dc7268af3"
-                    },
-                    "title": {
-                      "type": "string",
-                      "example": "紅茶"
-                    },
-                    "coverImgUrl": {
-                      "type": "string",
-                      "example": "https://123.png"
-                    },
-                    "isPublic": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "category": {
-                      "type": "string",
-                      "example": "66ad17220c1f2d5e934ba5d5"
-                    },
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "string",
-                          "example": "66ad12712a4c0826b5b65f3e"
-                        },
-                        "nickName": {
-                          "type": "string",
-                          "example": "carol"
-                        },
-                        "avatarImgUrl": {
-                          "type": "string",
-                          "example": ""
-                        }
-                      }
-                    },
-                    "cookingTime": {
-                      "type": "string",
-                      "example": "0-15 分鐘"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": "描述2"
-                    },
-                    "servings": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "ingredients": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "ingredientName": {
-                            "type": "string",
-                            "example": "紅茶包"
-                          },
-                          "ingredientQty": {
-                            "type": "string",
-                            "example": "2包"
-                          },
-                          "_id": {
-                            "type": "string",
-                            "example": "66b50fa7e845914dc7268af4"
-                          }
-                        }
-                      }
-                    },
-                    "steps": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "stepOrder": {
-                            "type": "number",
-                            "example": 1
-                          },
-                          "stepContent": {
-                            "type": "string",
-                            "example": "準備 200 cc 沸水，將茶包放入"
-                          },
-                          "_id": {
-                            "type": "string",
-                            "example": "66b50fa7e845914dc7268af5"
-                          }
-                        }
-                      }
-                    },
-                    "note": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "collects": {
-                      "type": "array",
-                      "example": [
-                        "66ad12712a4c0826b5b65f3e"
-                      ],
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
       },
       "patch": {
         "tags": [
@@ -1866,11 +1606,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
                     }
                   }
                 }
@@ -2044,11 +1784,158 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/recipes": {
+      "get": {
+        "tags": [
+          "Recipe 食譜"
+        ],
+        "summary": "取得我的所有食譜",
+        "description": "取得我的所有食譜",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string",
+            "description": "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "回傳成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6789f201862fb3b01124e466"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "雞肉丼飯"
+                          },
+                          "coverImgUrl": {
+                            "type": "string",
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
+                            }
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
                     }
                   }
                 }
@@ -2333,11 +2220,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
                     }
                   }
                 }
@@ -2382,148 +2269,109 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "午後紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "66ad17220c1f2d5e934ba5d5"
-                      },
-                      "user": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
+                            "example": "6789f201862fb3b01124e466"
                           },
-                          "nickName": {
+                          "title": {
                             "type": "string",
-                            "example": "carol"
+                            "example": "雞肉丼飯"
                           },
-                          "avatarImgUrl": {
+                          "coverImgUrl": {
                             "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
                             }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
                             }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
                           }
                         }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
                         }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
                       }
                     }
                   }
@@ -2567,148 +2415,109 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "午後紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "66ad17220c1f2d5e934ba5d5"
-                      },
-                      "user": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
+                            "example": "6789f201862fb3b01124e466"
                           },
-                          "nickName": {
+                          "title": {
                             "type": "string",
-                            "example": "carol"
+                            "example": "雞肉丼飯"
                           },
-                          "avatarImgUrl": {
+                          "coverImgUrl": {
                             "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
                             }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
                             }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
                           }
                         }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
                         }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
                       }
                     }
                   }
@@ -2832,6 +2641,26 @@
         }
       }
     },
+    "/api/forget-password": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/reset-password": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/admin/member/signIn": {
       "post": {
         "tags": [
@@ -2891,10 +2720,6 @@
                         "nickName": {
                           "type": "string",
                           "example": ""
-                        },
-                        "email": {
-                          "type": "string",
-                          "example": "admin@gmail.com"
                         },
                         "avatarImgUrl": {
                           "type": "string",
@@ -3001,8 +2826,84 @@
           {
             "name": "sort",
             "in": "query",
-            "type": "string",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "enum": {
+                  "type": "array",
+                  "example": [
+                    "asc",
+                    "desc"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "default": {
+                  "type": "string",
+                  "example": "desc"
+                }
+              }
+            },
             "description": "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "default": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            },
+            "description": "第幾頁，預設為 1"
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "default": {
+                  "type": "number",
+                  "example": 10
+                }
+              }
+            },
+            "description": "每頁幾筆，預設為 10"
+          },
+          {
+            "name": "noPagination",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "default": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            },
+            "description": "是否分頁，預設為 false"
           }
         ],
         "responses": {
@@ -3016,45 +2917,76 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "example": "66ad12532a4c0826b5b65f3b"
-                      },
-                      "nickName": {
-                        "type": "string",
-                        "example": "Carol"
-                      },
-                      "gender": {
-                        "type": "string",
-                        "example": "secret"
-                      },
-                      "avatarImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "email": {
-                        "type": "string",
-                        "example": "carol@mail.com"
-                      },
-                      "role": {
-                        "type": "string",
-                        "example": "member"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-02T17:07:31.743Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-07T17:02:49.701Z"
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "66ad12532a4c0826b5b65f3b"
+                          },
+                          "nickName": {
+                            "type": "string",
+                            "example": "Carol"
+                          },
+                          "gender": {
+                            "type": "string",
+                            "example": "secret"
+                          },
+                          "avatarImgUrl": {
+                            "type": "string",
+                            "example": "https://123.png"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "carol@mail.com"
+                          },
+                          "role": {
+                            "type": "string",
+                            "example": "member"
+                          },
+                          "collects": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-02T17:07:31.743Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-01-07T17:02:49.701Z"
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
+                        }
                       }
                     }
                   }
@@ -3138,23 +3070,19 @@
                   "properties": {
                     "_id": {
                       "type": "string",
-                      "example": "66ad12532a4c0826b5b65f3b"
+                      "example": "66ad12712a4c0826b5b65f55"
                     },
                     "nickName": {
                       "type": "string",
-                      "example": "Carol"
+                      "example": "carol"
                     },
                     "gender": {
                       "type": "string",
-                      "example": "secret"
+                      "example": "female"
                     },
                     "avatarImgUrl": {
                       "type": "string",
-                      "example": "https://123.png"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": ""
+                      "example": "https://123.jpg"
                     },
                     "email": {
                       "type": "string",
@@ -3162,15 +3090,36 @@
                     },
                     "role": {
                       "type": "string",
-                      "example": "member"
+                      "example": "admin"
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-02T17:07:31.743Z"
+                      "example": "2025-01-02T17:08:01.747Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-07T17:02:49.701Z"
+                      "example": "2025-03-24T05:25:50.590Z"
+                    },
+                    "collects": {
+                      "type": "array",
+                      "example": [
+                        "66eb7243c9d1a16bd4fc3ac5"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "hi"
+                    },
+                    "recipeCount": {
+                      "type": "number",
+                      "example": 6
+                    },
+                    "collectCount": {
+                      "type": "number",
+                      "example": 7
                     }
                   }
                 }
@@ -3200,21 +3149,6 @@
             "required": true,
             "type": "string",
             "description": "會員 ID"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "gender": {
-                  "type": "string",
-                  "example": "female"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -3228,46 +3162,60 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "example": "66ad12532a4c0826b5b65f3b"
-                      },
-                      "nickName": {
-                        "type": "string",
-                        "example": "Carol"
-                      },
-                      "gender": {
-                        "type": "string",
-                        "example": "secret"
-                      },
-                      "avatarImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "email": {
-                        "type": "string",
-                        "example": "carol@mail.com"
-                      },
-                      "role": {
-                        "type": "string",
-                        "example": "member"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-02T17:07:31.743Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-07T17:02:49.701Z"
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "66ad12712a4c0826b5b65f55"
+                    },
+                    "nickName": {
+                      "type": "string",
+                      "example": "carol"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "female"
+                    },
+                    "avatarImgUrl": {
+                      "type": "string",
+                      "example": "https://123.jpg"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "carol@mail.com"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "admin"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2025-01-02T17:08:01.747Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2025-03-24T05:25:50.590Z"
+                    },
+                    "collects": {
+                      "type": "array",
+                      "example": [
+                        "66eb7243c9d1a16bd4fc3ac5"
+                      ],
+                      "items": {
+                        "type": "string"
                       }
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "hi"
+                    },
+                    "recipeCount": {
+                      "type": "number",
+                      "example": 6
+                    },
+                    "collectCount": {
+                      "type": "number",
+                      "example": 7
                     }
                   }
                 }
@@ -3334,11 +3282,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-02T17:07:31.743Z"
+                      "example": "2025-01-02T17:07:31.743Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-07T17:02:49.701Z"
+                      "example": "2025-01-07T17:02:49.701Z"
                     }
                   }
                 }
@@ -3421,11 +3369,11 @@
                       },
                       "createdAt": {
                         "type": "string",
-                        "example": "2024-08-08T02:23:53.507Z"
+                        "example": "2025-01-08T02:23:53.507Z"
                       },
                       "updatedAt": {
                         "type": "string",
-                        "example": "2024-08-08T02:23:53.507Z"
+                        "example": "2025-01-08T02:23:53.507Z"
                       }
                     }
                   }
@@ -3542,11 +3490,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T02:23:53.507Z"
+                      "example": "2025-01-08T02:23:53.507Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T02:23:53.507Z"
+                      "example": "2025-01-08T02:23:53.507Z"
                     }
                   }
                 }
@@ -3626,11 +3574,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-10T17:24:56.684Z"
+                      "example": "2025-01-10T17:24:56.684Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-10T17:24:56.684Z"
+                      "example": "2025-01-10T17:24:56.684Z"
                     }
                   }
                 }
@@ -3767,11 +3715,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-10T17:24:56.684Z"
+                      "example": "2025-01-10T17:24:56.684Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-10T17:24:56.684Z"
+                      "example": "2025-01-10T17:24:56.684Z"
                     }
                   }
                 }
@@ -3798,17 +3746,86 @@
         "description": "取得全部分類",
         "parameters": [
           {
-            "name": "categoryId",
-            "in": "path",
-            "type": "string",
-            "required": true,
-            "description": "分類 ID"
-          },
-          {
             "name": "sort",
             "in": "query",
-            "type": "string",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "enum": {
+                  "type": "array",
+                  "example": [
+                    "asc",
+                    "desc"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "default": {
+                  "type": "string",
+                  "example": "desc"
+                }
+              }
+            },
             "description": "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "default": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            },
+            "description": "第幾頁，預設為 1"
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "default": {
+                  "type": "number",
+                  "example": 10
+                }
+              }
+            },
+            "description": "每頁幾筆，預設為 10"
+          },
+          {
+            "name": "noPagination",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "default": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            },
+            "description": "是否分頁，預設為 false"
           }
         ],
         "responses": {
@@ -3824,25 +3841,7 @@
                 "data": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "title": {
-                        "type": "string",
-                        "example": "飲品"
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b55acd7d1468039fc92566"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-09T14:42:21.111Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-09T14:42:21.111Z"
-                      }
-                    }
+                    "$ref": "#/components/schemas/Category"
                   }
                 }
               },
@@ -3927,11 +3926,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -3999,11 +3998,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -4058,11 +4057,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -4130,11 +4129,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -4419,11 +4418,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
                     }
                   }
                 }
@@ -4467,148 +4466,109 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "CAROL 紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "66ad17220c1f2d5e934ba5d5"
-                      },
-                      "user": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
+                            "example": "6789f201862fb3b01124e466"
                           },
-                          "nickName": {
+                          "title": {
                             "type": "string",
-                            "example": "carol"
+                            "example": "雞肉丼飯"
                           },
-                          "avatarImgUrl": {
+                          "coverImgUrl": {
                             "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
                             }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
                             }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
                           }
                         }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
                         }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
                       }
                     }
                   }
@@ -4823,11 +4783,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
                     }
                   }
                 }
@@ -5020,11 +4980,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
                     }
                   }
                 }
@@ -5202,11 +5162,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-08T18:34:15.748Z"
+                      "example": "2025-01-08T18:34:15.748Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-08T19:03:11.666Z"
+                      "example": "2025-01-08T19:03:11.666Z"
                     }
                   }
                 }
@@ -5257,148 +5217,109 @@
                   "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "nutritionFacts": {
-                        "type": "object",
-                        "properties": {
-                          "calories": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "protein": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalFat": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "totalCarb": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sodium": {
-                            "type": "number",
-                            "example": 0
-                          },
-                          "sugar": {
-                            "type": "number",
-                            "example": 0
-                          }
-                        }
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "66b50fa7e845914dc7268af3"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "CAROL 紅茶"
-                      },
-                      "coverImgUrl": {
-                        "type": "string",
-                        "example": "https://123.png"
-                      },
-                      "isPublic": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "66ad17220c1f2d5e934ba5d5"
-                      },
-                      "user": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "66ad12712a4c0826b5b65f3e"
+                            "example": "6789f201862fb3b01124e466"
                           },
-                          "nickName": {
+                          "title": {
                             "type": "string",
-                            "example": "carol"
+                            "example": "雞肉丼飯"
                           },
-                          "avatarImgUrl": {
+                          "coverImgUrl": {
                             "type": "string",
-                            "example": ""
-                          }
-                        }
-                      },
-                      "cookingTime": {
-                        "type": "string",
-                        "example": "0-15 分鐘"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "描述2"
-                      },
-                      "servings": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ingredientName": {
-                              "type": "string",
-                              "example": "紅茶包"
-                            },
-                            "ingredientQty": {
-                              "type": "string",
-                              "example": "2包"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af4"
+                            "example": "https://123.jpg"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "6747ffe7bbe060fd3f49a366"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66ad12532a4c0826b5b65f66"
+                              },
+                              "nickName": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "avatarImgUrl": {
+                                "type": "string",
+                                "example": "https://123.jpg"
+                              }
                             }
-                          }
-                        }
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "stepOrder": {
-                              "type": "number",
-                              "example": 1
-                            },
-                            "stepContent": {
-                              "type": "string",
-                              "example": "準備 200 cc 沸水，將茶包放入"
-                            },
-                            "_id": {
-                              "type": "string",
-                              "example": "66b50fa7e845914dc7268af5"
+                          },
+                          "cookingTime": {
+                            "type": "string",
+                            "example": "15-30 分鐘"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。"
+                          },
+                          "servings": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2025-01-17T11:05:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2025-03-15T05:37:01.984Z"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "example": [
+                              "67458c7b58e288bc86d66a88"
+                            ],
+                            "items": {
+                              "type": "string"
                             }
+                          },
+                          "collectsCount": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "isRecommended": {
+                            "type": "boolean",
+                            "example": true
                           }
                         }
-                      },
-                      "note": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "collects": {
-                        "type": "array",
-                        "example": [
-                          "66ad12712a4c0826b5b65f3e"
-                        ],
-                        "items": {
-                          "type": "string"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "hasPrev": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNext": {
+                          "type": "boolean",
+                          "example": false
                         }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2024-08-08T18:34:15.748Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2024-08-08T19:03:11.666Z"
                       }
                     }
                   }
@@ -5507,11 +5428,11 @@
                       },
                       "createdAt": {
                         "type": "string",
-                        "example": "2024-08-09T14:42:21.111Z"
+                        "example": "2025-01-09T14:42:21.111Z"
                       },
                       "updatedAt": {
                         "type": "string",
-                        "example": "2024-08-09T14:42:21.111Z"
+                        "example": "2025-01-09T14:42:21.111Z"
                       }
                     }
                   }
@@ -5598,11 +5519,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -5670,11 +5591,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -5729,11 +5650,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -5801,11 +5722,11 @@
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "example": "2024-08-09T14:42:21.111Z"
+                      "example": "2025-01-09T14:42:21.111Z"
                     }
                   }
                 }
@@ -5832,10 +5753,16 @@
           "type": "string",
           "description": "分類名稱",
           "example": "日韓料理"
+        },
+        "categoryImgUrl": {
+          "type": "string",
+          "description": "分類圖片",
+          "example": "https://123.png"
         }
       },
       "required": [
-        "title"
+        "title",
+        "categoryImgUrl"
       ]
     },
     "Image": {
@@ -6068,7 +5995,7 @@
               "createdAt": {
                 "type": "string",
                 "description": "收藏時間",
-                "example": "2024-08-08T02:23:53.507Z"
+                "example": "2025-01-08T02:23:53.507Z"
               }
             }
           }
@@ -6110,6 +6037,188 @@
       "required": [
         "title"
       ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "分類名稱",
+            "example": "日韓料理"
+          },
+          "categoryImgUrl": {
+            "type": "string",
+            "description": "分類圖片",
+            "example": "https://123.png"
+          }
+        },
+        "required": [
+          "title",
+          "categoryImgUrl"
+        ]
+      },
+      "AdminUser": {
+        "type": "object",
+        "properties": {
+          "nickName": {
+            "type": "string",
+            "description": "暱稱",
+            "minLength": 2,
+            "example": "小花"
+          },
+          "gender": {
+            "type": "string",
+            "description": "性別",
+            "enum": [
+              "secret",
+              "male",
+              "female"
+            ],
+            "example": "secret"
+          },
+          "avatarImgUrl": {
+            "type": "string",
+            "description": "頭像圖片網址",
+            "default": "",
+            "example": "https://123.png"
+          },
+          "description": {
+            "type": "string",
+            "description": "自我介紹",
+            "default": "",
+            "example": "這是我的自我介紹"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "電子郵件",
+            "example": "flower@mail.com"
+          },
+          "role": {
+            "type": "string",
+            "description": "權限",
+            "enum": [
+              "member",
+              "admin"
+            ],
+            "example": "member"
+          },
+          "collects": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "收藏的食譜 ID",
+              "example": "66eb7243c9d1a16bd4fc3ac5"
+            }
+          },
+          "recipeCount": {
+            "type": "integer",
+            "description": "食譜數量",
+            "example": 6
+          },
+          "collectCount": {
+            "type": "integer",
+            "description": "收藏數量",
+            "example": 7
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "帳號建立時間",
+            "example": "2025-01-02T17:07:31.743Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "帳號更新時間",
+            "example": "2025-01-07T17:02:49.701Z"
+          }
+        },
+        "required": [
+          "nickName",
+          "gender",
+          "email",
+          "role"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "nickName": {
+            "type": "string",
+            "description": "暱稱",
+            "minLength": 2,
+            "example": "小花"
+          },
+          "gender": {
+            "type": "string",
+            "description": "性別",
+            "enum": [
+              "secret",
+              "male",
+              "female"
+            ],
+            "example": "secret"
+          },
+          "avatarImgUrl": {
+            "type": "string",
+            "description": "頭像圖片網址",
+            "default": "",
+            "example": "https://123.png"
+          },
+          "description": {
+            "type": "string",
+            "description": "自我介紹",
+            "default": "",
+            "example": "這是我的自我介紹"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "電子郵件",
+            "example": "flower@mail.com"
+          },
+          "collects": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "收藏的食譜 ID",
+              "example": "66eb7243c9d1a16bd4fc3ac5"
+            }
+          },
+          "recipeCount": {
+            "type": "integer",
+            "description": "食譜數量",
+            "example": 6
+          },
+          "collectCount": {
+            "type": "integer",
+            "description": "收藏數量",
+            "example": 7
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "帳號建立時間",
+            "example": "2025-01-02T17:07:31.743Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "帳號更新時間",
+            "example": "2025-01-07T17:02:49.701Z"
+          }
+        },
+        "required": [
+          "nickName",
+          "gender",
+          "email",
+          "role"
+        ]
+      }
     }
   }
 }

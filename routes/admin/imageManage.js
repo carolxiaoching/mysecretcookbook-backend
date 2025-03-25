@@ -42,8 +42,8 @@ router.get(
               "nickName": "carol",
               "avatarImgUrl": ""
             },
-            "createdAt": "2024-08-08T02:23:53.507Z",
-            "updatedAt": "2024-08-08T02:23:53.507Z"
+            "createdAt": "2025-01-08T02:23:53.507Z",
+            "updatedAt": "2025-01-08T02:23:53.507Z"
           }
         ]
       }
@@ -85,8 +85,8 @@ router.get(
             "nickName": "carol",
             "avatarImgUrl": ""
           },
-          "createdAt": "2024-08-08T02:23:53.507Z",
-          "updatedAt": "2024-08-08T02:23:53.507Z"
+          "createdAt": "2025-01-08T02:23:53.507Z",
+          "updatedAt": "2025-01-08T02:23:53.507Z"
         }
       }
     }
@@ -190,8 +190,8 @@ router.post(
             "avatarImgUrl": ""
           },
           "_id": "66b7a268fc467a804ba21c31",
-          "createdAt": "2024-08-10T17:24:56.684Z",
-          "updatedAt": "2024-08-10T17:24:56.684Z"
+          "createdAt": "2025-01-10T17:24:56.684Z",
+          "updatedAt": "2025-01-10T17:24:56.684Z"
         }
       }
     }
@@ -232,8 +232,8 @@ router.delete(
             "nickName": "carol",
             "avatarImgUrl": ""
           },
-          "createdAt": "2024-08-10T17:24:56.684Z",
-          "updatedAt": "2024-08-10T17:24:56.684Z"
+          "createdAt": "2025-01-10T17:24:56.684Z",
+          "updatedAt": "2025-01-10T17:24:56.684Z"
         }
       }
     }

@@ -19,6 +19,164 @@ const doc = {
     },
   },
   consumes: ["application/json"],
+  components: {
+    schemas: {
+      Category: {
+        type: "object",
+        properties: {
+          title: {
+            type: "string",
+            description: "分類名稱",
+            example: "日韓料理",
+          },
+          categoryImgUrl: {
+            type: "string",
+            description: "分類圖片",
+            example: "https://123.png",
+          },
+        },
+        required: ["title", "categoryImgUrl"],
+      },
+      AdminUser: {
+        type: "object",
+        properties: {
+          nickName: {
+            type: "string",
+            description: "暱稱",
+            minLength: 2,
+            example: "小花",
+          },
+          gender: {
+            type: "string",
+            description: "性別",
+            enum: ["secret", "male", "female"],
+            example: "secret",
+          },
+          avatarImgUrl: {
+            type: "string",
+            description: "頭像圖片網址",
+            default: "",
+            example: "https://123.png",
+          },
+          description: {
+            type: "string",
+            description: "自我介紹",
+            default: "",
+            example: "這是我的自我介紹",
+          },
+          email: {
+            type: "string",
+            format: "email",
+            description: "電子郵件",
+            example: "flower@mail.com",
+          },
+          role: {
+            type: "string",
+            description: "權限",
+            enum: ["member", "admin"],
+            example: "member",
+          },
+          collects: {
+            type: "array",
+            items: {
+              type: "string",
+              description: "收藏的食譜 ID",
+              example: "66eb7243c9d1a16bd4fc3ac5",
+            },
+          },
+          recipeCount: {
+            type: "integer",
+            description: "食譜數量",
+            example: 6,
+          },
+          collectCount: {
+            type: "integer",
+            description: "收藏數量",
+            example: 7,
+          },
+          createdAt: {
+            type: "string",
+            format: "date-time",
+            description: "帳號建立時間",
+            example: "2025-01-02T17:07:31.743Z",
+          },
+          updatedAt: {
+            type: "string",
+            format: "date-time",
+            description: "帳號更新時間",
+            example: "2025-01-07T17:02:49.701Z",
+          },
+        },
+        required: ["nickName", "gender", "email", "role"],
+      },
+      User: {
+        type: "object",
+        properties: {
+          nickName: {
+            type: "string",
+            description: "暱稱",
+            minLength: 2,
+            example: "小花",
+          },
+          gender: {
+            type: "string",
+            description: "性別",
+            enum: ["secret", "male", "female"],
+            example: "secret",
+          },
+          avatarImgUrl: {
+            type: "string",
+            description: "頭像圖片網址",
+            default: "",
+            example: "https://123.png",
+          },
+          description: {
+            type: "string",
+            description: "自我介紹",
+            default: "",
+            example: "這是我的自我介紹",
+          },
+          email: {
+            type: "string",
+            format: "email",
+            description: "電子郵件",
+            example: "flower@mail.com",
+          },
+          collects: {
+            type: "array",
+            items: {
+              type: "string",
+              description: "收藏的食譜 ID",
+              example: "66eb7243c9d1a16bd4fc3ac5",
+            },
+          },
+          recipeCount: {
+            type: "integer",
+            description: "食譜數量",
+            example: 6,
+          },
+          collectCount: {
+            type: "integer",
+            description: "收藏數量",
+            example: 7,
+          },
+          createdAt: {
+            type: "string",
+            format: "date-time",
+            description: "帳號建立時間",
+            example: "2025-01-02T17:07:31.743Z",
+          },
+          updatedAt: {
+            type: "string",
+            format: "date-time",
+            description: "帳號更新時間",
+            example: "2025-01-07T17:02:49.701Z",
+          },
+        },
+        required: ["nickName", "gender", "email", "role"],
+      },
+    },
+  },
   "@definitions": {
     Category: {
       type: "object",
@@ -28,8 +186,13 @@ const doc = {
           description: "分類名稱",
           example: "日韓料理",
         },
+        categoryImgUrl: {
+          type: "string",
+          description: "分類圖片",
+          example: "https://123.png",
+        },
       },
-      required: ["title"],
+      required: ["title", "categoryImgUrl"],
     },
     Image: {
       type: "object",
@@ -238,7 +401,7 @@ const doc = {
               createdAt: {
                 type: "string",
                 description: "收藏時間",
-                example: "2024-08-08T02:23:53.507Z",
+                example: "2025-01-08T02:23:53.507Z",
               },
             },
           },

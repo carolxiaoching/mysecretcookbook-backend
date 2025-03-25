@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
 const successHandler = require("../services/successHandler");
 const appError = require("../services/appError");
 const errorAsyncHandler = require("../services/errorAsyncHandler");
 const User = require("../models/user");
+const { generateToken, verifyToken } = require("../utils/authUtils");
 
 // 從 Headers 取得 token
 const getTokenFromHeaders = (headers) => {
@@ -12,25 +12,10 @@ const getTokenFromHeaders = (headers) => {
   return "";
 };
 
-// 驗證 token
-const verifyToken = (token) => {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(payload);
-      }
-    });
-  });
-};
-
 // 產生 JWT token 並回傳會員資料
 const generateAndSendJWT = (res, statusCode, user) => {
   // 產生 token
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_DAY,
-  });
+  const token = generateToken({ id: user._id });
 
   // 將傳入的密碼清空，避免不小心外洩
   user.password = undefined;

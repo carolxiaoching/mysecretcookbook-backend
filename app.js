@@ -16,6 +16,7 @@ const categoriesRouter = require("./routes/member/categories");
 const recipesRouter = require("./routes/member/recipes");
 const tagsRouter = require("./routes/member/tags");
 const imagesRouter = require("./routes/member/images");
+const forgetRouter = require("./routes/member/forget");
 
 // 後台
 const memberManageRouter = require("./routes/admin/memberManage");
@@ -54,6 +55,7 @@ app.use("/api", imagesRouter);
 app.use("/api", categoriesRouter);
 app.use("/api", recipesRouter);
 app.use("/api", tagsRouter);
+app.use("/api", forgetRouter);
 
 // 後台
 app.use("/admin", memberManageRouter);

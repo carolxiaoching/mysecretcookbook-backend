@@ -15,36 +15,37 @@ router.get(
     * #swagger.tags = ["管理員 - Category 分類"]
     * #swagger.summary = "取得全部分類"
     * #swagger.description = "取得全部分類"
-    * #swagger.parameters["categoryId"] = {
-      in: "path",
-      type: "string",
-      required: true,
-      description: "分類 ID",
+    * #swagger.parameters["sort"] = {
+      in: "query",
+      name: "sort",
+      schema: { type: "string", enum: ["asc", "desc"], default: "desc" },
+      description: "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
     }
-    * #swagger.parameters["query"] = [
-      {
-        in: "query",
-        name: "sort",
-        type: "string",
-        description: "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
-      }
-    ]
+    * #swagger.parameters["page"] = {
+      in: "query",
+      name: "page",
+      schema: { type: "integer", default: 1 },
+      description: "第幾頁，預設為 1"
+    }
+    * #swagger.parameters["perPage"] = {
+      in: "query",
+      name: "perPage",
+      schema: { type: "integer", default: 10 },
+      description: "每頁幾筆，預設為 10"
+    }
+    * #swagger.parameters["noPagination"] = {
+      in: "query",
+      name: "noPagination",
+      schema: { type: "boolean", default: false },
+      description: "是否分頁，預設為 false"
+    }
     * #swagger.responses[200] = {
       description: "回傳成功",
       schema: {
-        "status": "success",
-        "data": [
+        status: "success",
+        data: [
           {
-            "title": "日韓料理",
-            "_id": "66b62acd7d1468039fc925e8",
-            "createdAt": "2024-08-09T14:42:21.111Z",
-            "updatedAt": "2024-08-09T14:42:21.111Z"
-          },
-          {
-            "title": "飲品",
-            "_id": "66b55acd7d1468039fc92566",
-            "createdAt": "2024-08-09T14:42:21.111Z",
-            "updatedAt": "2024-08-09T14:42:21.111Z"
+            $ref: "#/components/schemas/Category"
           }
         ]
       }
@@ -76,8 +77,8 @@ router.get(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
-          "createdAt": "2024-08-09T14:42:21.111Z",
-          "updatedAt": "2024-08-09T14:42:21.111Z"
+          "createdAt": "2025-01-09T14:42:21.111Z",
+          "updatedAt": "2025-01-09T14:42:21.111Z"
         }
       }
     }
@@ -114,8 +115,8 @@ router.post(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
-          "createdAt": "2024-08-09T14:42:21.111Z",
-          "updatedAt": "2024-08-09T14:42:21.111Z"
+          "createdAt": "2025-01-09T14:42:21.111Z",
+          "updatedAt": "2025-01-09T14:42:21.111Z"
         }
       }
     }
@@ -158,8 +159,8 @@ router.patch(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
-          "createdAt": "2024-08-09T14:42:21.111Z",
-          "updatedAt": "2024-08-09T14:42:21.111Z"
+          "createdAt": "2025-01-09T14:42:21.111Z",
+          "updatedAt": "2025-01-09T14:42:21.111Z"
         }
       }
     }
@@ -193,8 +194,8 @@ router.delete(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
-          "createdAt": "2024-08-09T14:42:21.111Z",
-          "updatedAt": "2024-08-09T14:42:21.111Z"
+          "createdAt": "2025-01-09T14:42:21.111Z",
+          "updatedAt": "2025-01-09T14:42:21.111Z"
         }
       }
     }
