@@ -62,17 +62,13 @@ const ImageControllers = {
   // 刪除所有圖片
   async delAllImages(req, res, next) {
     // 刪除 firebase storage 中所有圖片
-    await bucket
-      .deleteFiles()
-      .then(async () => {
-        // 刪除資料庫中所有圖片
-        await Image.deleteMany({});
-
-        return successHandler(res, 200, []);
-      })
-      .catch(() => {
-        return appError(500, "刪除失敗，查無此圖片", next);
-      });
+    try {
+      await bucket.deleteFiles();
+      await Image.deleteMany({});
+      successHandler(res, 200, []);
+    } catch (err) {
+      appError(500, "刪除失敗，查無此圖片", next);
+    }
   },
 
   // 刪除指定會員所有圖片
@@ -88,17 +84,14 @@ const ImageControllers = {
     }
 
     // 刪除 firebase storage 中所有圖片
-    await bucket
-      .deleteFiles({ prefix: `images/${memberId}/` })
-      .then(async () => {
-        // 刪除資料庫中所有圖片
-        await Image.deleteMany({ user: memberId });
-
-        return successHandler(res, 200, []);
-      })
-      .catch(() => {
-        return appError(500, "刪除失敗，查無此圖片", next);
-      });
+    try {
+      await bucket.deleteFiles({ prefix: `images/${memberId}/` });
+      // 刪除資料庫中所有圖片
+      await Image.deleteMany({ user: memberId });
+      successHandler(res, 200, []);
+    } catch (err) {
+      appError(500, "刪除失敗，查無此圖片", next);
+    }
   },
 
   // 上傳圖片
@@ -173,16 +166,13 @@ const ImageControllers = {
     // 取得檔案路徑
     const { imagePath } = delImage;
 
-    // 刪除 firebase storage 中圖片
-    await bucket
-      .file(imagePath)
-      .delete()
-      .then(() => {
-        return successHandler(res, 200, delImage);
-      })
-      .catch(() => {
-        return appError(500, "刪除失敗，查無此圖片", next);
-      });
+    try {
+      // 刪除 firebase storage 中圖片
+      await bucket.file(imagePath).delete();
+      successHandler(res, 200, delImage);
+    } catch (err) {
+      appError(500, "刪除失敗，查無此圖片", next);
+    }
   },
 };
 

@@ -86,16 +86,13 @@ const ImageControllers = {
     // 取得檔案路徑
     const { imagePath } = delImage;
 
-    // 刪除 firebase storage 中圖片
-    await bucket
-      .file(imagePath)
-      .delete()
-      .then(() => {
-        return successHandler(res, 200, delImage);
-      })
-      .catch(() => {
-        return appError(500, "刪除失敗，查無此圖片", next);
-      });
+    try {
+      // 刪除 firebase storage 中圖片
+      await bucket.file(imagePath).delete();
+      successHandler(res, 200, delImage);
+    } catch (err) {
+      appError(500, "刪除失敗，查無此圖片", next);
+    }
   },
 };
 
