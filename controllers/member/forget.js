@@ -23,23 +23,23 @@ const transporter = nodemailer.createTransport({
 const forgetControllers = {
   // 寄送忘記密碼的 Eamil
   async forgetPassword(req, res, next) {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return appError(400, "查無此會員！", next);
+    }
+
+    // 產生 JWT Token 並設置 1 小時過期
+    const resetToken = generateToken({ id: user._id }, "1h");
+
+    const resetLink = `${
+      process.env.NODE_ENV === "development"
+        ? process.env.BASE_URL_DEV
+        : process.env.BASE_URL_PROD
+    }/#/reset-password?token=${resetToken}`;
+
     try {
-      const { email } = req.body;
-
-      const user = await User.findOne({ email });
-      if (!user) {
-        return appError(400, "查無此會員！", next);
-      }
-
-      // 產生 JWT Token 並設置 1 小時過期
-      const resetToken = generateToken({ id: user._id }, "1h");
-
-      const resetLink = `${
-        process.env.NODE_ENV === "development"
-          ? process.env.BASE_URL_DEV
-          : process.env.BASE_URL_PROD
-      }/#/reset-password?token=${resetToken}`;
-
       await transporter.sendMail({
         from: `"我的秘密食譜團隊" <${process.env.EMAIL_USER}>`,
         to: email,
@@ -57,7 +57,7 @@ const forgetControllers = {
         `,
       });
 
-      successHandler(res, 200, "密碼重設 Email 已發送");
+      return successHandler(res, 200, "密碼重設 Email 已發送");
     } catch (err) {
       return appError(400, "錯誤！", err);
     }
