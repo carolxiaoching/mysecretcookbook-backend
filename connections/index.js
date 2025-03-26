@@ -10,11 +10,13 @@ const DB = process.env.DATABASE.replace(
   process.env.DATABASE_PASSWORD
 );
 
-mongoose
-  .connect(DB)
-  .then(() => {
+const connectDB = async () => {
+  try {
+    await mongoose.connect(DB);
     console.log("資料連結成功");
-  })
-  .catch((err) => {
-    console.log("資料連結錯誤：", err);
-  });
+  } catch (err) {
+    console.error("資料連結錯誤：", err);
+  }
+};
+
+connectDB();
