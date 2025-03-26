@@ -15,38 +15,53 @@ router.get(
     * #swagger.tags = ["管理員 - Tag 標籤"]
     * #swagger.summary = "取得全部標籤"
     * #swagger.description = "取得全部標籤"
-    * #swagger.parameters["tagId"] = {
-      in: "path",
-      type: "string",
-      required: true,
-      description: "標籤 ID",
+    * #swagger.security = [{
+      "Bearer": []
+    }]
+    * #swagger.parameters["sort"] = {
+      in: "query",
+      name: "sort",
+      schema: { type: "string", enum: ["asc", "desc"], default: "desc" },
+      description: "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
     }
-    * #swagger.parameters["query"] = [
-      {
-        in: "query",
-        name: "sort",
-        type: "string",
-        description: "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
-      }
-    ]
+    * #swagger.parameters["page"] = {
+      in: "query",
+      name: "page",
+      schema: { type: "integer", default: 1 },
+      description: "第幾頁，預設為 1"
+    }
+    * #swagger.parameters["perPage"] = {
+      in: "query",
+      name: "perPage",
+      schema: { type: "integer", default: 10 },
+      description: "每頁幾筆，預設為 10"
+    }
+    * #swagger.parameters["noPagination"] = {
+      in: "query",
+      name: "noPagination",
+      schema: { type: "boolean", default: false },
+      description: "是否不分頁，預設為 false"
+    }
     * #swagger.responses[200] = {
       description: "回傳成功",
       schema: {
         "status": "success",
-        "data": [
-          {
-            "title": "素食",
-            "_id": "66b62acd7d1468039fc925e8",
-            "createdAt": "2025-01-09T14:42:21.111Z",
-            "updatedAt": "2025-01-09T14:42:21.111Z"
-          },
-          {
-            "title": "懶人料理",
-            "_id": "66b55acd7d1468039fc92566",
-            "createdAt": "2025-01-09T14:42:21.111Z",
-            "updatedAt": "2025-01-09T14:42:21.111Z"
+        "data": {
+          "results": [
+            {
+              "_id": "6789f201862fb3b01124e466",
+              "title": "懶人料理",
+              "createdAt": "2025-01-17T11:05:00.000Z",
+              "updatedAt": "2025-03-15T05:37:01.984Z",
+            }
+          ],
+          "pagination": {
+            "totalPage": 1,
+            "currentPage": 1,
+            "hasPrev": false,
+            "hasNext": false
           }
-        ]
+        }
       }
     }
   */
@@ -63,6 +78,9 @@ router.get(
     * #swagger.tags = ["管理員 - Tag 標籤"]
     * #swagger.summary = "取得指定標籤"
     * #swagger.description = "取得指定標籤"
+    * #swagger.security = [{
+      "Bearer": []
+    }]
     * #swagger.parameters["tagId"] = {
       in: "path",
       type: "string",

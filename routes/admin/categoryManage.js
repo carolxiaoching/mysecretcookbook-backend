@@ -15,6 +15,9 @@ router.get(
     * #swagger.tags = ["管理員 - Category 分類"]
     * #swagger.summary = "取得全部分類"
     * #swagger.description = "取得全部分類"
+    * #swagger.security = [{
+      "Bearer": []
+    }]
     * #swagger.parameters["sort"] = {
       in: "query",
       name: "sort",
@@ -37,17 +40,29 @@ router.get(
       in: "query",
       name: "noPagination",
       schema: { type: "boolean", default: false },
-      description: "是否分頁，預設為 false"
+      description: "是否不分頁，預設為 false"
     }
     * #swagger.responses[200] = {
       description: "回傳成功",
       schema: {
         status: "success",
-        data: [
-          {
-            $ref: "#/components/schemas/Category"
+        "data": {
+          "results": [
+            {
+              "_id": "6789f201862fb3b01124e466",
+              "title": "雞肉丼飯",
+              "categoryImgUrl": "https://123.jpg",
+              "createdAt": "2025-01-17T11:05:00.000Z",
+              "updatedAt": "2025-03-15T05:37:01.984Z",
+            }
+          ],
+          "pagination": {
+            "totalPage": 1,
+            "currentPage": 1,
+            "hasPrev": false,
+            "hasNext": false
           }
-        ]
+        }
       }
     }
   */
@@ -64,6 +79,9 @@ router.get(
     * #swagger.tags = ["管理員 - Category 分類"]
     * #swagger.summary = "取得指定分類"
     * #swagger.description = "取得指定分類"
+    * #swagger.security = [{
+      "Bearer": []
+    }]
     * #swagger.parameters["categoryId"] = {
       in: "path",
       type: "string",
@@ -77,6 +95,7 @@ router.get(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
+          "categoryImgUrl": "https://123.jpg",
           "createdAt": "2025-01-09T14:42:21.111Z",
           "updatedAt": "2025-01-09T14:42:21.111Z"
         }
@@ -106,6 +125,7 @@ router.post(
       description: "資料格式",
       schema: {
         "$title": "日韓料理",
+        "$categoryImgUrl": "https://123.jpg",
       }
     }
     * #swagger.responses[200] = {
@@ -115,6 +135,7 @@ router.post(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
+          "categoryImgUrl": "https://123.jpg",
           "createdAt": "2025-01-09T14:42:21.111Z",
           "updatedAt": "2025-01-09T14:42:21.111Z"
         }
@@ -149,7 +170,7 @@ router.patch(
       required: true,
       description: "資料格式",
       schema: {
-        "$title": "日韓料理",
+        "title": "日韓料理",
       }
     }
     * #swagger.responses[200] = {
@@ -159,6 +180,7 @@ router.patch(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
+          "categoryImgUrl": "https://123.jpg",
           "createdAt": "2025-01-09T14:42:21.111Z",
           "updatedAt": "2025-01-09T14:42:21.111Z"
         }
@@ -194,6 +216,7 @@ router.delete(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
+          "categoryImgUrl": "https://123.jpg",
           "createdAt": "2025-01-09T14:42:21.111Z",
           "updatedAt": "2025-01-09T14:42:21.111Z"
         }

@@ -19,33 +19,57 @@ router.get(
     * #swagger.security = [{
       "Bearer": []
     }]
-   * #swagger.parameters["query"] = [
-      {
-        in: "query",
-        name: "sort",
-        type: "string",
-        description: "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
-      }
-    ]
+    * #swagger.parameters["sort"] = {
+      in: "query",
+      name: "sort",
+      schema: { type: "string", enum: ["asc", "desc"], default: "desc" },
+      description: "依更新日期排序 asc 舊到新，desc 新到舊，預設為 desc"
+    }
+    * #swagger.parameters["page"] = {
+      in: "query",
+      name: "page",
+      schema: { type: "integer", default: 1 },
+      description: "第幾頁，預設為 1"
+    }
+    * #swagger.parameters["perPage"] = {
+      in: "query",
+      name: "perPage",
+      schema: { type: "integer", default: 10 },
+      description: "每頁幾筆，預設為 10"
+    }
+    * #swagger.parameters["noPagination"] = {
+      in: "query",
+      name: "noPagination",
+      schema: { type: "boolean", default: false },
+      description: "是否不分頁，預設為 false"
+    }
     * #swagger.responses[200] = {
       description: "回傳成功",
       schema: {
         "status": "success",
-        "data": [
-          {
-            "_id": "66b42c391905521b87d5c432",
-            "imageUrl": "https://storage.googleapis.com/123",
-            "imagePath": "images/66ad12712a4c0826b5b65f3e/2c531f86-bd6d-4c9c-a7fa-be00b929c137.png",
-            "type": "photo",
-            "user": {
-              "_id": "66ad12712a4c0826b5b65f3e",
-              "nickName": "carol",
-              "avatarImgUrl": ""
-            },
-            "createdAt": "2025-01-08T02:23:53.507Z",
-            "updatedAt": "2025-01-08T02:23:53.507Z"
+        "data": {
+          "results": [
+            {
+              "_id": "66b42c391905521b87d5c432",
+              "imageUrl": "https://123.jpg",
+              "imagePath": "images/66ad12712a4c0826b5b65f3e/2c531f86-bd6d-4c9c-a7fa-be00b929c137.png",
+              "type": "photo",
+              "user": {
+                "_id": "66ad12712a4c0826b5b65f3e",
+                "nickName": "carol",
+                "avatarImgUrl": ""
+              },
+              "createdAt": "2025-01-08T02:23:53.507Z",
+              "updatedAt": "2025-01-08T02:23:53.507Z"
+            }
+          ],
+          "pagination": {
+            "totalPage": 1,
+            "currentPage": 1,
+            "hasPrev": false,
+            "hasNext": false
           }
-        ]
+        }
       }
     }
   */
@@ -67,7 +91,7 @@ router.get(
     }]
     * #swagger.parameters["imageId"] = {
       in: "path",
-      name: "type",
+      name: "imageId",
       type: "string",
       description: "圖片 ID"
     }
@@ -77,7 +101,7 @@ router.get(
         "status": "success",
         "data": {
           "_id": "66b42c391905521b87d5c432",
-          "imageUrl": "https://storage.googleapis.com/123",
+          "imageUrl": "https://123.jpg",
           "imagePath": "images/66ad12712a4c0826b5b65f3e/2c531f86-bd6d-4c9c-a7fa-be00b929c137.png",
           "type": "photo",
           "user": {
@@ -105,21 +129,21 @@ router.delete(
     * #swagger.summary = "刪除指定會員所有圖片"
     * #swagger.description = "刪除指定會員所有圖片"
     * #swagger.security = [{
-      "Bearer": []
-    }]
+        "Bearer": []
+      }]
     * #swagger.parameters["memberId"] = {
-      in: "path",
-      name: "type",
-      type: "string",
-      description: "會員 ID"
-    }
-    * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": []
+        in: "path",
+        name: "memberId",
+        type: "string",
+        description: "會員 ID"
       }
-    }
+    * #swagger.responses[200] = {
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": []
+        }
+      }
   */
   checkTokenAndSetAuth,
   getUserFromAuthId,
@@ -135,15 +159,15 @@ router.delete(
     * #swagger.summary = "刪除所有圖片"
     * #swagger.description = "刪除所有圖片"
     * #swagger.security = [{
-      "Bearer": []
-    }]
+        "Bearer": []
+      }]
     * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": []
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": []
+        }
       }
-    }
   */
   checkTokenAndSetAuth,
   getUserFromAuthId,
@@ -159,42 +183,42 @@ router.post(
     * #swagger.summary = "上傳圖片"
     * #swagger.description = "上傳圖片"
     * #swagger.security = [{
-      "Bearer": []
-    }]
+        "Bearer": []
+      }]
     * #swagger.consumes = ['multipart/form-data']
     * #swagger.parameters["query"] = {
-      in: "query",
-      name: "type",
-      type: "string",
-      required: false,
-      description: "avatar 大頭照、photo 一般照片，預設為 photo"
-    }
+        in: "query",
+        name: "type",
+        type: "string",
+        required: false,
+        description: "avatar、photo、icon，預設為 photo"
+      }
     * #swagger.parameters["singleFile"] = {
-      in: "formData",
-      name:'img',
-      type: "file",
-      required: true,
-      description: "圖片",
-    }
-    * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": {
-          "imageUrl": "https://storage.googleapis.com/my-secret-cookbook-5ecf1.appspot.com/images/66ad12712a4c0826b5b65f3e/465efc60-ca9e-41d0-838a-66d0188a3a78.jpg?GoogleAccessId=firebase-adminsdk-mu8pu%40my-secret-cookbook-5ecf1.iam.gserviceaccount.com&Expires=16756646400&Signature=KqyNd8KhhpD4gbjeDGNGueCkpnRo4irn7Ph7tbv5L59DzYHJqiZU7bw03ILzHokT1%2F4uou%2BP%2FZm0dPysRQS1ABxEQXaOk3ZHEGb7QiejYszAqODe9wSZzzYkIwVVix0jpGpnIZFe4jGJFaILNnTu%2F8TREF1JJI8hns80ccrfRNyBJTVba9ZtScqTCHuG3rLyGv52KZBh6VgqEVZnN7VqOW94RgSMTGbU2GxzYiVATDMwE3ED%2B7prKylfP0mDEmd1uqzL5RllJAZonS3A2Nmb%2BGERjg0suYTyG5Ff7Wkz9JsHWaEW2EXslvK31vn0z2dvF%2BrVc%2BqoP9GGgpQpFOocbA%3D%3D",
-          "imagePath": "images/66ad12712a4c0826b5b65f3e/465efc60-ca9e-41d0-838a-66d0188a3a78.jpg",
-          "type": "photo",
-          "user": {
-            "_id": "66ad12712a4c0826b5b65f3e",
-            "nickName": "carol",
-            "avatarImgUrl": ""
-          },
-          "_id": "66b7a268fc467a804ba21c31",
-          "createdAt": "2025-01-10T17:24:56.684Z",
-          "updatedAt": "2025-01-10T17:24:56.684Z"
+        in: "formData",
+        name:'img',
+        type: "file",
+        required: true,
+        description: "圖片",
+      }
+      * #swagger.responses[200] = {
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": {
+            "imageUrl": "https://123.jpg",
+            "imagePath": "images/66ad12712a4c0826b5b65f3e/465efc60-ca9e-41d0-838a-66d0188a3a78.jpg",
+            "type": "photo",
+            "user": {
+              "_id": "66ad12712a4c0826b5b65f3e",
+              "nickName": "carol",
+              "avatarImgUrl": ""
+            },
+            "_id": "66b7a268fc467a804ba21c31",
+            "createdAt": "2025-01-10T17:24:56.684Z",
+            "updatedAt": "2025-01-10T17:24:56.684Z"
+          }
         }
       }
-    }
   */
   checkTokenAndSetAuth,
   getUserFromAuthId,
@@ -210,33 +234,33 @@ router.delete(
     * #swagger.summary = "刪除指定圖片"
     * #swagger.description = "刪除指定圖片"
     * #swagger.security = [{
-      "Bearer": []
-    }]
+        "Bearer": []
+      }]
     * #swagger.parameters["imageId"] = {
-      in: "path",
-      name: "type",
-      type: "string",
-      description: "圖片 ID"
-    }
+        in: "path",
+        name: "imageId",
+        type: "string",
+        description: "圖片 ID"
+      }
     * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": {
-          "_id": "66b7a268fc467a804ba21c31",
-          "imageUrl": "https://storage.googleapis.com/my-secret-cookbook-5ecf1.appspot.com/images/66ad12712a4c0826b5b65f3e/465efc60-ca9e-41d0-838a-66d0188a3a78.jpg?GoogleAccessId=firebase-adminsdk-mu8pu%40my-secret-cookbook-5ecf1.iam.gserviceaccount.com&Expires=16756646400&Signature=KqyNd8KhhpD4gbjeDGNGueCkpnRo4irn7Ph7tbv5L59DzYHJqiZU7bw03ILzHokT1%2F4uou%2BP%2FZm0dPysRQS1ABxEQXaOk3ZHEGb7QiejYszAqODe9wSZzzYkIwVVix0jpGpnIZFe4jGJFaILNnTu%2F8TREF1JJI8hns80ccrfRNyBJTVba9ZtScqTCHuG3rLyGv52KZBh6VgqEVZnN7VqOW94RgSMTGbU2GxzYiVATDMwE3ED%2B7prKylfP0mDEmd1uqzL5RllJAZonS3A2Nmb%2BGERjg0suYTyG5Ff7Wkz9JsHWaEW2EXslvK31vn0z2dvF%2BrVc%2BqoP9GGgpQpFOocbA%3D%3D",
-          "imagePath": "images/66ad12712a4c0826b5b65f3e/465efc60-ca9e-41d0-838a-66d0188a3a78.jpg",
-          "type": "photo",
-          "user": {
-            "_id": "66ad12712a4c0826b5b65f3e",
-            "nickName": "carol",
-            "avatarImgUrl": ""
-          },
-          "createdAt": "2025-01-10T17:24:56.684Z",
-          "updatedAt": "2025-01-10T17:24:56.684Z"
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": {
+            "_id": "66b7a268fc467a804ba21c31",
+            "imageUrl": "https://123.jpg",
+            "imagePath": "images/66ad12712a4c0826b5b65f3e/465efc60-ca9e-41d0-838a-66d0188a3a78.jpg",
+            "type": "photo",
+            "user": {
+              "_id": "66ad12712a4c0826b5b65f3e",
+              "nickName": "carol",
+              "avatarImgUrl": ""
+            },
+            "createdAt": "2025-01-10T17:24:56.684Z",
+            "updatedAt": "2025-01-10T17:24:56.684Z"
+          }
         }
       }
-    }
   */
   checkTokenAndSetAuth,
   errorAsyncHandler(ImageControllers.delImage)

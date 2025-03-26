@@ -34,11 +34,8 @@ router.get(
           {
             "title": "日韓料理",
             "_id": "66b62acd7d1468039fc925e8",
+            "categoryImgUrl": "https://123.jpg",
           },
-          {
-            "title": "飲品",
-            "_id": "66b55acd7d1468039fc92566",
-          }
         ]
       }
     }
@@ -66,6 +63,7 @@ router.get(
         "data": {
           "title": "日韓料理",
           "_id": "66b62acd7d1468039fc925e8",
+          "categoryImgUrl": "https://123.jpg",
         }
       }
     }

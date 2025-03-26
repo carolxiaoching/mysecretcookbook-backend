@@ -111,7 +111,7 @@ router.get(
       in: "query",
       name: "noPagination",
       schema: { type: "boolean", default: false },
-      description: "是否分頁，預設為 false"
+      description: "是否不分頁，預設為 false"
     }
     * #swagger.responses[200] = {
       description: "回傳成功",
@@ -162,30 +162,28 @@ router.get(
       in: "path",
       type: "string",
       required: true,
-      description: "會員 ID",
+      description: "會員 ID"
     }
    * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": {
-          "_id": "66ad12712a4c0826b5b65f55",
-          "nickName": "carol",
-          "gender": "female",
-          "avatarImgUrl": "https://123.jpg",
-          "email": "carol@mail.com",
-          "role": "admin",
-          "createdAt": "2025-01-02T17:08:01.747Z",
-          "updatedAt": "2025-03-24T05:25:50.590Z",
-          "collects": [
-              "66eb7243c9d1a16bd4fc3ac5"
-          ],
-          "description": "hi",
-          "recipeCount": 6,
-          "collectCount": 7
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": {
+            "_id": "66ad12712a4c0826b5b65f55",
+            "nickName": "carol",
+            "gender": "female",
+            "avatarImgUrl": "https://123.jpg",
+            "email": "carol@mail.com",
+            "role": "admin",
+            "createdAt": "2025-01-02T17:08:01.747Z",
+            "updatedAt": "2025-03-24T05:25:50.590Z",
+            "collects": ["66eb7243c9d1a16bd4fc3ac5"],
+            "description": "hi",
+            "recipeCount": 6,
+            "collectCount": 7
+          }
         }
       }
-    }
   */
   checkTokenAndSetAuth,
   getUserFromAuthId,
@@ -201,44 +199,43 @@ router.patch(
    * #swagger.summary = "更新指定會員"
    * #swagger.description = "更新指定會員"
    * #swagger.security = [{
-      "Bearer": []
-    }]
+        "Bearer": []
+      }]
    * #swagger.parameters["memberId"] = {
-      in: "path",
-      type: "string",
-      required: true,
-      description: "會員 ID",
-    }
-   * #swagger.parameters["body"] = {
-      in: "body",
-      type: "object",
-      required: true,
-      description: "資料格式",
-      schema: {
-        "gender": "female"
+        in: "path",
+        type: "string",
+        required: true,
+        description: "會員 ID"
       }
-   * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": {
-          "_id": "66ad12712a4c0826b5b65f55",
-          "nickName": "carol",
-          "gender": "female",
-          "avatarImgUrl": "https://123.jpg",
-          "email": "carol@mail.com",
-          "role": "admin",
-          "createdAt": "2025-01-02T17:08:01.747Z",
-          "updatedAt": "2025-03-24T05:25:50.590Z",
-          "collects": [
-              "66eb7243c9d1a16bd4fc3ac5"
-          ],
-          "description": "hi",
-          "recipeCount": 6,
-          "collectCount": 7
+   * #swagger.parameters["body"] = {
+        in: "body",
+        type: "object",
+        required: true,
+        description: "資料格式",
+        schema: {
+          "gender": "female"
         }
       }
-    }
+   * #swagger.responses[200] = {
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": {
+            "_id": "66ad12712a4c0826b5b65f55",
+            "nickName": "carol",
+            "gender": "female",
+            "avatarImgUrl": "https://123.jpg",
+            "email": "carol@mail.com",
+            "role": "admin",
+            "createdAt": "2025-01-02T17:08:01.747Z",
+            "updatedAt": "2025-03-24T05:25:50.590Z",
+            "collects": ["66eb7243c9d1a16bd4fc3ac5"],
+            "description": "hi",
+            "recipeCount": 6,
+            "collectCount": 7
+          }
+        }
+      }
   */
   checkTokenAndSetAuth,
   getUserFromAuthId,
@@ -254,29 +251,30 @@ router.delete(
    * #swagger.summary = "刪除指定會員"
    * #swagger.description = "刪除指定會員"
    * #swagger.security = [{
-      "Bearer": []
-    }]
+        "Bearer": []
+      }]
    * #swagger.parameters["memberId"] = {
-      in: "path",
-      type: "string",
-      required: true,
-      description: "會員 ID",
-    }
+        in: "path",
+        type: "string",
+        required: true,
+        description: "會員 ID",
+      }
    * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": {
-          "_id": "66ad12532a4c0826b5b65f3b",
-          "nickName": "Carol",
-          "gender": "secret",
-          "avatarImgUrl": "https://123.png",
-          "description": "",
-          "createdAt": "2025-01-02T17:07:31.743Z",
-          "updatedAt": "2025-01-07T17:02:49.701Z"
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": {
+            "_id": "66ad12532a4c0826b5b65f3b",
+            "nickName": "Carol",
+            "gender": "secret",
+            "avatarImgUrl": "https://123.png",
+            "description": "",
+            "collects": [],
+            "createdAt": "2025-01-02T17:07:31.743Z",
+            "updatedAt": "2025-01-07T17:02:49.701Z"
+          }
         }
       }
-    }
   */
   checkTokenAndSetAuth,
   getUserFromAuthId,
@@ -292,15 +290,15 @@ router.delete(
    * #swagger.summary = "刪除全部會員"
    * #swagger.description = "刪除全部會員"
    * #swagger.security = [{
-      "Bearer": []
-    }]
+        "Bearer": []
+      }]
    * #swagger.responses[200] = {
-      description: "回傳成功",
-      schema: {
-        "status": "success",
-        "data": []
+        description: "回傳成功",
+        schema: {
+          "status": "success",
+          "data": []
+        }
       }
-    }
   */
   checkTokenAndSetAuth,
   getUserFromAuthId,

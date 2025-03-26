@@ -109,7 +109,7 @@ router.get(
           "description": "",
           "collects": [],
           "recipeCount": 1,
-          "collectCount": 0
+          "collectCount": 0,
           "createdAt": "2025-01-02T17:08:01.747Z",
           "updatedAt": "2025-01-02T17:08:01.747Z"
         }
@@ -142,7 +142,7 @@ router.get(
           "createdAt": "2025-01-02T17:08:01.747Z",
           "updatedAt": "2025-03-24T05:25:50.590Z",
           "collects": [
-              "66eb7243c9d1a16bd4fc3ac5"
+            "66eb7243c9d1a16bd4fc3ac5"
           ],
           "description": "hi",
           "recipeCount": 6,
@@ -188,7 +188,7 @@ router.patch(
           "createdAt": "2025-01-02T17:08:01.747Z",
           "updatedAt": "2025-03-24T05:25:50.590Z",
           "collects": [
-              "66eb7243c9d1a16bd4fc3ac5"
+            "66eb7243c9d1a16bd4fc3ac5"
           ],
           "description": "hi",
           "recipeCount": 6,
@@ -301,20 +301,18 @@ router.get(
               "isPublic": true,
               "category": "6747ffe7bbe060fd3f49a366",
               "user": {
-                  "_id": "66ad12532a4c0826b5b65f66",
-                  "nickName": "admin",
-                  "avatarImgUrl": "https://123.jpg"
+                "_id": "66ad12532a4c0826b5b65f66",
+                "nickName": "admin",
+                "avatarImgUrl": "https://123.jpg"
               },
               "cookingTime": "15-30 分鐘",
               "description": "日式風味的雞肉丼飯，簡單又快速，適合忙碌的工作日。",
               "servings": 2,
               "createdAt": "2025-01-17T11:05:00.000Z",
               "updatedAt": "2025-03-15T05:37:01.984Z",
-              "tags": [
-                  "67458c7b58e288bc86d66a88",
-              ],
+              "tags": ["66ad17220c1f2d5e934ba5d5"],
               "collectsCount": 2,
-              "isRecommended": true
+              "isRecommended": true,
             }
           ],
           "pagination": {
