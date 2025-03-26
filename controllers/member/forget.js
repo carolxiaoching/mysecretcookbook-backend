@@ -59,7 +59,8 @@ const forgetControllers = {
 
       return successHandler(res, 200, "密碼重設 Email 已發送");
     } catch (err) {
-      return appError(400, "Email 已發失敗！", next);
+      console.log(err);
+      return appError(400, "Email 發送失敗！", next);
     }
   },
 
