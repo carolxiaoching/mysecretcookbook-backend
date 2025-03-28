@@ -26,6 +26,9 @@ const RecipeControllers = {
     } = req.body;
     const { auth } = req;
 
+    console.log("req.body：", req.body);
+    console.log("nutritionFacts：", nutritionFacts);
+
     const validations = [
       {
         condition: !validationUtils.isObjectEmpty(req.body),

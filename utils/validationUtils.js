@@ -109,12 +109,14 @@ const validationUtils = {
     ];
     // 檢查營養資訊是否為物件，且不能為 null
     if (typeof nutritionFacts !== "object" || nutritionFacts === null) {
+      console.log("typeof：", nutritionFacts, typeof nutritionFacts);
       return false;
     }
 
     // 驗證營養資訊每個屬性的值是否 >= 0
     for (const field of validFields) {
       if (!this.isValidNumber(nutritionFacts[field], 0)) {
+        console.log("field：", nutritionFacts[field]);
         return false;
       }
     }
