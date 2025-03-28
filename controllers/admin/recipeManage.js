@@ -210,6 +210,9 @@ const RecipeControllers = {
       isRecommended,
     } = req.body;
 
+    console.log("req.body：", req.body);
+    console.log("nutritionFacts：", nutritionFacts);
+
     const validations = [
       {
         condition: !validationUtils.isValidObjectId(recipeId),
