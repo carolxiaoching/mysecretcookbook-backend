@@ -109,14 +109,12 @@ const validationUtils = {
     ];
     // 檢查營養資訊是否為物件，且不能為 null
     if (typeof nutritionFacts !== "object" || nutritionFacts === null) {
-      console.log("typeof：", nutritionFacts, typeof nutritionFacts);
       return false;
     }
 
     // 驗證營養資訊每個屬性的值是否 >= 0
     for (const field of validFields) {
       if (!this.isValidNumber(nutritionFacts[field], 0)) {
-        console.log("field：", nutritionFacts[field]);
         return false;
       }
     }
@@ -164,13 +162,6 @@ const validationUtils = {
   },
 
   // 使用驗證規則陣列逐一檢查資料，若任何一個規則的條件為 true，則立即回傳錯誤
-  // async checkValidation(validations, next) {
-  //   for (const validation of validations) {
-  //     if (validation.condition) {
-  //       return appError(400, validation.message, next);
-  //     }
-  //   }
-  // },
   async checkValidation(validations, next) {
     for (const validation of validations) {
       if (validation.condition) {

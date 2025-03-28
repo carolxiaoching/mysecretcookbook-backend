@@ -3,6 +3,7 @@ const appError = require("../../services/appError");
 const validationUtils = require("../../utils/validationUtils");
 const paginationUtils = require("../../utils/paginationUtils");
 const Tag = require("../../models/tag");
+const Recipe = require("../../models/recipe");
 
 const TagControllers = {
   // 取得全部標籤
@@ -125,6 +126,13 @@ const TagControllers = {
       return appError(400, "查無此標籤！", next);
     }
 
+    // 使用 $pull 將標籤 ID 從 Recipe 的 tags 陣列中移除
+    await Recipe.updateMany(
+      { tags: tagId }, // 找到包含該標籤的食譜
+      { $pull: { tags: tagId } }, // 從食譜 tags 陣列中移除此標籤 ID
+      { new: true }
+    );
+
     const delTag = await Tag.findByIdAndDelete(tagId, {
       new: true,
     });
@@ -139,6 +147,12 @@ const TagControllers = {
 
   // 刪除全部標籤
   async delAllTags(req, res, next) {
+    // 使用 $pull 將所有 Recipe 的 tags 陣列清空
+    await Recipe.updateMany(
+      {}, // 更新所有食譜
+      { $set: { tags: [] } } // 將 tags 設為空陣列
+    );
+
     await Tag.deleteMany({});
 
     successHandler(res, 200, []);
